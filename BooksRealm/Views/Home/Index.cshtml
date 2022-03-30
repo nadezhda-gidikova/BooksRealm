@@ -1,0 +1,83 @@
+﻿@using BooksRealm.Components;
+@model BooksRealm.Models.Home.IndexViewModel
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+<!-- Header End -->
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="hero__text text-white">
+                    <h4>Books: @Model.BooksCount</h4>
+                    <h4>Authors: @Model.AuthorsCount</h4>
+                    <h4>Reviews: @Model.ReviewsCount</h4>
+                    <h4>Genres: @Model.GenresCount</h4>
+                    <a asp-controller="Books" asp-action="All"><span>See more</span> <i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="trending__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Trending Now</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a asp-controller="Books" asp-action="All" class="primary-btn">View All <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var book in this.Model.RandomBooks)
+                        {
+
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg">
+                                        <img src="@book.CoverUrl" width="300" img-responsive class="img-fluid rounded-start" alt="@book.Title">
+                                        <div class="ep">Rating: @book.Rating</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            <li>Active</li>
+                                            <li>Movie</li>
+                                        </ul>
+                                        <h5><a>@book.Title</a></h5>
+                                        <h5><a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn site-btn">Details</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar" style="margin-left:100px">
+                    <div class="product__sidebar__view">
+                        <div class="section-title">
+                            <br />
+                            <h4>Top Books of 2021</h4>
+                            <br />
+                            @await Component.InvokeAsync(typeof(TopBooksComponent));
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+<!-- Footer Section Begin -->

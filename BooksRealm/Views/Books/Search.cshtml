@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BooksRealm.Models.Books.BookInListViewModel>
+@{
+    this.ViewData["Title"] = $"We found {@Model.Count()} results :" ;
+}
+
+
+<h1 class="text-info">@this.ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    @foreach (var book in this.Model)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="product__item">
+                <div class="product__item__pic set-bg">
+                    <img src="@book.CoverUrl" width="200" img-responsive img-fluid rounded-start border-4" alt="@book.Title">
+                    <div class="ep">Rating: @book.Rating</div>
+                </div>
+                <div class="product__item__text">
+                    <ul>
+                        <li>Active</li>
+                        <li>Movie</li>
+                    </ul>
+                    <h5 class="card-title text-white">Title: @book.Title</h5>
+                  <span class="text-white"><h7>Author: 
+                        @foreach(var auth in book.Authors)
+                        {
+                           <span>@auth.AuthorName</span>
+                        }
+                        </h7>
+                    </span>
+                    <div class="comment text-white"><i class="fa fa-comments"></i>Date of publish: @book.DateOfPublish</div>                  
+                    <h5><a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn btn-primary">Details</a></h5>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />

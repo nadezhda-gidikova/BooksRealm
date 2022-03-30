@@ -1,0 +1,43 @@
+﻿@model BooksRealm.Models.Home.IndexViewModel
+@{
+    this.ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center row">
+    <h1 class="display-4">Welcome to @ViewData["Title"]</h1>
+    <div class="col-md-10">
+        <div class="row">
+            @foreach (var book in this.Model.RandomBooks)
+            {
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="@book.CoverUrl" width="300" img-responsive class="img-fluid rounded-start" alt="@book.Title">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">Rating: @book.Rating</p>
+                            <p class="card-text">Date of publish: @book.DateOfPublish</p>
+                            <p class="card-text">Description: @book.Description.Substring(0,100)...</p>                            
+                              
+                                <a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn btn-primary">Go to details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <p>We have:</p>
+        <ul class="list-group">
+            <li class="list-group-item bg-info">Books: @Model.BooksCount</li>
+            <li class="list-group-item bg-light">Authors: @Model.AuthorsCount</li>
+            <li class="list-group-item bg-info">Reviews: @Model.ReviewsCount</li>
+            <li class="list-group-item bg-light">Genres: @Model.GenresCount</li>
+
+        </ul>
+    </div>
+</div>

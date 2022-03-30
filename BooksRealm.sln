@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksRealm", "BooksRealm\BooksRealm.csproj", "{EDDB635A-E4A0-49EA-A39B-572481649B21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksRealm.Data", "BooksRealm.Data\BooksRealm.Data.csproj", "{63C56619-4F2D-47E6-877F-DFD490B6FA59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDDB635A-E4A0-49EA-A39B-572481649B21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDDB635A-E4A0-49EA-A39B-572481649B21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDDB635A-E4A0-49EA-A39B-572481649B21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDDB635A-E4A0-49EA-A39B-572481649B21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C56619-4F2D-47E6-877F-DFD490B6FA59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C56619-4F2D-47E6-877F-DFD490B6FA59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C56619-4F2D-47E6-877F-DFD490B6FA59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C56619-4F2D-47E6-877F-DFD490B6FA59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F5693FE2-14D8-4156-A215-044D1914DB46}
+	EndGlobalSection
+EndGlobal

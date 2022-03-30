@@ -1,0 +1,135 @@
+﻿@model BooksRealm.Models.Books.BookViewModel
+@{
+    this.ViewData["Title"] = @Model.Title;
+}
+<section class="anime-details spad">
+    <div class="container">
+        <div class="anime__details__content">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="anime__details__pic set-bg">
+                        <img src="@Model.CoverUrl" width="300" img-responsive class="img-fluid rounded-start" alt="@Model.Title">
+                        <div class="comment"><i class="fa fa-comments"></i>@Model.Reviews.Count()</div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="anime__details__text">
+                        <div class="anime__details__title">
+                            <h3>@Model.Title</h3>
+                            <span>
+                                By:
+                                @foreach (var auth in @Model.Authors)
+                                {
+                                    <span>@auth.AuthorName</span>
+                                }
+                            </span>
+                        </div>
+
+                        <form id="starRatingsForm" method="post"></form>
+                        <div class="anime__details__rating">
+                            <ul class="rating d-inline">
+                                <li class="star-fill" data-vote="1"><i class="fas fa-star"></i></li>
+                                <li class="star-fill" data-vote="2"><i class="fas fa-star"></i></li>
+                                <li class="star-fill" data-vote="3"><i class="fas fa-star"></i></li>
+                                <li class="star-fill" data-vote="4"><i class="fas fa-star"></i></li>
+                                <li class="star-fill" data-vote="5"><i class="fas fa-star"></i></li>
+                                <li><span id="averageVoteValue">@Model.AverageVote.ToString("0.0") </span> </li>
+                                <li><span>/@Model.Rating</span></li>
+                            </ul>
+                           
+                        </div>
+
+
+                        <p>@Model.Description</p>
+                        <div class="anime__details__widget">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9">
+                                    <ul>
+                                        <li><span>Date of publish:</span>@Model.DateOfPublish.ToString("Y")</li>
+                                    </ul>
+                                    <div class="col-lg-8 col-md-8">
+                                        <ul>
+                                            <li>
+                                                <span>Genres:</span>
+                                                @foreach (var auth in @Model.Genres)
+                                                {
+                                                <li>
+                                                    @auth.GenreName
+                                                </li>
+                                            }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <div class="anime__details__review">
+                            <div class="section-title">
+                                <h5>Reviews</h5>
+                            </div>
+                            @foreach (var review in @Model.Reviews)
+                            {
+                                <div class="anime__review__item">
+                                    <div class="anime__review__item__pic">
+                                        <img src="~/img/user.png" alt="">
+                                    </div>
+                                    <div class="anime__review__item__text">
+                                        <h6>
+                                            @review.UserName!=null ? @review.UserName : "Anonimous";
+
+                                        </h6>
+                                        <h7>
+                                            <p>@review.Text</p>
+                                        </h7>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="anime__details__form">
+                            <div class="section-title">
+                                <h5>Your Comment</h5>
+                            </div>
+                            <form  asp-controller="Reviews" asp-action="AddReview" asp-route-bookId="" method="post">
+                                <textarea placeholder="Your Comment"></textarea>
+                                <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <form method="post" id="antiForgeryForm"></form>
+    @section Scripts {
+        <script>
+        $("li[data-vote]").each(function (el) {
+            $(this).click(function () {
+                var value = $(this).attr("data-vote");
+                var bookId = @Model.Id;
+                var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+                var data = { bookId: bookId, value: value };
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Votes",
+                    data: JSON.stringify(data),
+                    headers: {
+                        'X-CSRF-TOKEN': antiForgeryToken
+                    },
+                    success: function (data) {
+                        $('#averageVoteValue').html(data.averageVote.toFixed(1));
+                        showRating("star - fill",data.averageVote);
+                    },
+                    contentType: 'application/json',
+                });
+            })
+        });
+        </script>
+}

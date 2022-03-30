@@ -1,0 +1,17 @@
+﻿@model IEnumerable<BooksRealm.Models.Books.BookInListViewModel>
+@foreach (var book in this.Model)
+{
+
+    <div class="filter__gallery">
+        <div class="product__item set-bg mix day years">
+            <div>
+                <img src="@book.CoverUrl" width="200" img-responsive class="img-fluid rounded-start" alt="@book.Title">
+                
+            </div>
+            <div>
+                <h5><a>@book.Title</a></h5>
+            </div>            
+            <a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn site-btn">MORE</a>            
+        </div>
+    </div>
+}

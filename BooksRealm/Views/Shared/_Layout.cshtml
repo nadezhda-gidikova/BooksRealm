@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Book Realm">
+    <meta name="keywords" content="book,genre,author,fantacy, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] - BookRealm</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Css Styles -->
+
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css">
+    <link rel="stylesheet" href="~/css/elegant-icons.css">
+    <link rel="stylesheet" href="~/css/plyr.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/slicknav.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Homepage</a></li>
+                                <li class="form-group">
+                                    <a asp-area="" asp-controller="Books" asp-action="ByCategory">Categories <span class="arrow_carrot-down"></span></a>
+                                    <ul class="dropdown" id="categoryName" name="categoryName">
+                                        <li><a name="categoryName" asp-area="" asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Novels">Novels</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Thrillers">Thrillers</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Travel & Adventure">Travel & Adventure</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Biography & Memoir">Biography</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="True Crime">True Crime</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Mysteries">Mysteries</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Poetry">Poetry</a></li> 
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Magical Realism">Magical Realism</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Humor & Satire">Humor & Satire</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Heroes">Heroes</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Philosophical">Philosophical</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Historical Fiction">Historical Fiction</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Generational & Family Sagas">Family Sagas</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Magical or Supernatural Elements">Magical Elements</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="The Future">The Future</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="History, Current Affairs and Religion">Current Affairs and Religion</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Romance/Love Stories">Romance</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Science, Health and the Environment">Science</a></li>
+                                        <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Gothic">Gothic</a></li>
+
+                                    </ul>
+                                </li>
+
+                                <li><a href="#">Contacts</a></li>
+
+                                <partial name="_LoginPartial" />
+                                <li>
+                                    <div class="w3_search">
+                                        <form method="post">
+                                            <input type="text" name="search" id="search" placeholder="Search" required="">
+                                            <input type="submit" asp-area="" asp-controller="Books" asp-action="Search" value="Go">
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <footer class="footer">
+        <div class="page-up">
+            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer__logo">
+                        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="footer__nav">
+                        <ul>
+                            <li class="active"><a href="./index.html">Homepage</a></li>
+                            <li><a href="./categories.html">Categories</a></li>
+                            <li><a href="./blog.html">Our Blog</a></li>
+                            <li><a href="#">Contacts</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-white-50">
+                    &copy; 2022 - BookRealm - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+    <!-- Js Plugins -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/player.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/mixitup.min.js"></script>
+    <script src="~/js/jquery.slicknav.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/rating.js"></script>
+
+
+
+
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

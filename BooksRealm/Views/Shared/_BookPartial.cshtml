@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BooksRealm.Models.Books.BookInListViewModel>
+<div class="row">
+    @foreach (var book in this.Model)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="product__item">
+                <div class="product__item__pic set-bg">
+                    <img src="@book.CoverUrl" width="200" img-responsive img-fluid rounded-start border-4" alt="@book.Title">
+                    <div class="ep">Rating: @book.Rating</div>
+                </div>
+                <div class="product__item__text">
+                    <ul>
+                        <li>Active</li>
+                        <li>Movie</li>
+                    </ul>
+                    <h5 class="card-title text-white">Title: @book.Title</h5>
+                    <span class="text-white">
+                        <h7>
+                            By :
+                            @foreach (var auth in book.Authors)
+                            {
+                                <span>@auth.AuthorName</span>
+                            }
+                        </h7>
+                    </span>
+                    <div class="comment text-white"><i class="fa fa-calendar"></i>Published: @book.DateOfPublish.ToString("Y")</div>
+                    <h5><a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn site-btn">Details</a></h5>
+                </div>
+            </div>
+        </div>
+    }
+</div>
