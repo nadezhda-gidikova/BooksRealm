@@ -1,0 +1,40 @@
+﻿@model BooksRealm.Models.Books.BookListViewModel
+
+@{
+    ViewBag.Title = "Books Administration";
+}
+
+<h1>All Books</h1>
+
+<a asp-area="Admin" asp-controller="Books" asp-action="Add" class="btn btn-warning float-right ml-3">Add New Book</a>
+
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Cover</th>
+            <th scope="col">DateOfPublish</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+        <tr>
+            <td scope="col">@book.Id</td>
+            <td scope="col">@book.Title</td>
+            <td scope="col"><img src="@book.CoverUrl" width="50" img-responsive img-fluid rounded-start border-4" alt="@book.Title"></td>
+            <td scope="col">@book.DateOfPublish.ToString("Y")</td>
+            <td scope="col">
+                <a asp-area="Admin" asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger float-right ml-3">Delete</a>
+                <a asp-area="Admin" asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning float-right ml-3">Edit</a>
+                <a asp-area="" asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn btn-primary float-right ml-3">View</a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+<partial name="_PagingPartial" model="@Model" />

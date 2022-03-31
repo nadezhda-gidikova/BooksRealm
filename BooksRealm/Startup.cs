@@ -87,6 +87,9 @@ namespace BooksRealm
             services.AddTransient<ICountService, CountService>();
             services.AddTransient<IRatingsService, RatingsService>();
             services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IGenreService, GenreService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+
             services.AddTransient<IVotesService, VotesService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IDataGathererService, DataGathererService>();
@@ -96,6 +99,7 @@ namespace BooksRealm
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.PrepareDatabase();
+            
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
             
             // Seed data on application startup

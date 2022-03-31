@@ -18,8 +18,8 @@
 
         public class Book
         {
-            public const int BrandMinLength = 2;
-            public const int BrandMaxLength = 20;
+            public const int TitleMinLength = 2;
+            public const int TitleMaxLength = 20;
             public const int ModelMinLength = 2;
             public const int ModelMaxLength = 30;
             public const int DescriptionMinLength = 10;
@@ -31,13 +31,9 @@
         {
             public const int NameMaxLength = 25;
         }
-
-        public class Dealer
+        public class Genre
         {
-            public const int NameMinLength = 2;
             public const int NameMaxLength = 25;
-            public const int PhoneNumberMinLength = 6;
-            public const int PhoneNumberMaxLength = 30;
         }
     }
 }

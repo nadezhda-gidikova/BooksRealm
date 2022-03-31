@@ -5,7 +5,7 @@ namespace BooksRealm.Models.Genres
 {
     public class GenreViewModel:IMapFrom<BookGenre>
     {
-        public int Id { get; set; }
+        public int GenreId { get; set; }
         public string GenreName { get; set; }
     }
 }

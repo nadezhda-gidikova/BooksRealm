@@ -32,19 +32,6 @@ namespace BooksRealm.Controllers
                 return this.NotFound();
             }
 
-            //const int ItemsPerPage = 12;
-            ////var books = this.bookService.GetByAuthorName<BookInListViewModel>(search,id,ItemsPerPage);
-            ////if (books == null)
-            ////{
-            ////    //books = this.bookService.GetByTitle<BookInListViewModel>(search);
-            ////}
-            //var viewModel = new BookListViewModel
-            //{
-            //    ItemsPerPage = ItemsPerPage,
-            //    PageNumber = id,
-            //    BooksCount = this.bookService.GetCount(),
-            //    Books =this.bookService.GetByAuthorName<BookInListViewModel>(search, id, ItemsPerPage),
-            //};
             var books = this.bookService.GetByAuthorName<BookInListViewModel>(search, 1, 12);
             return this.View(books);
            
@@ -74,13 +61,6 @@ namespace BooksRealm.Controllers
             return this.View(book);
         }
 
-        [HttpPost]
-        //[Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await this.bookService.DeleteAsync(id);
-            return this.RedirectToAction(nameof(this.All));
-        }
         public IActionResult Details(int id)
         {
             var book = this.bookService.GetById<BookViewModel>(id);

@@ -9,20 +9,70 @@
     using System.Collections.Generic;
     using System;
     using Microsoft.EntityFrameworkCore;
+    using BooksRealm.Models.Books;
+
     public class BookService : IBookService
     {
         private readonly BooksRealmDbContext db;
         private readonly IDeletableEntityRepository<Book> booksRepo;
-        private readonly IRepository<Author> authorRepo;
-        
-        public BookService(BooksRealmDbContext db,IDeletableEntityRepository<Book> booksRepo, IRepository<Author> authorRepo)
+        private readonly IDeletableEntityRepository<Author> authorRepo;
+        private readonly IDeletableEntityRepository<Genre> genreRepo;
+        private readonly IRepository<BookGenre> bookGenreRepo;
+        private readonly IRepository<AuthorBook> authorBookRepo;
+
+        public BookService(BooksRealmDbContext db
+            ,IDeletableEntityRepository<Book> booksRepo
+            , IDeletableEntityRepository<Author> authorRepo
+            ,IDeletableEntityRepository<Genre>genreRepo
+            ,IRepository<BookGenre>bookGenreRepo,
+            IRepository<AuthorBook>authorBookRepo)
         {
             this.db = db;
             this.booksRepo = booksRepo;
             this.authorRepo = authorRepo;
+            this.genreRepo = genreRepo;
+            this.bookGenreRepo = bookGenreRepo;
+            this.authorBookRepo = authorBookRepo;
+        }
+        public async Task<int> CreateAsync(BookFormModel input)
+        {
+            var bookNew = new Book
+            {
+                Title = input.Title,
+                Description=input.Description,
+                DateOfPublish=input.DateOfPublish,
+                CoverUrl=input.CoverUrl,
+            };
+            await this.booksRepo.AddAsync(bookNew);
+            var auth = this.authorRepo
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == input.AuthorId);
+            var authorBookData = new AuthorBook
+            {
+                AuthorId = input.AuthorId,
+                BookId = bookNew.Id
+
+            };
+            bookNew.Authors.Add(authorBookData);
+            await this.authorBookRepo.AddAsync(authorBookData);
+            await this.authorBookRepo.SaveChangesAsync();
+            var genr = this.genreRepo
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == input.GenreId);
+            var genreBook = new BookGenre
+            {
+                GenreId = input.GenreId,
+                BookId = bookNew.Id,
+            };
+            bookNew.Genres.Add(genreBook);
+            await this.bookGenreRepo.AddAsync(genreBook);
+            await this.bookGenreRepo.SaveChangesAsync();
+            await this.booksRepo.SaveChangesAsync();
+            
+            return bookNew.Id;
         }
 
-        public async Task DeleteAsync(int id)
+            public async Task DeleteAsync(int id)
         {
             var book = this.booksRepo.All().FirstOrDefault(x => x.Id == id);
             this.booksRepo.Delete(book);
@@ -32,14 +82,12 @@
         public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12)
         {
             var books = this.booksRepo.AllAsNoTracking()
-                .OrderByDescending(x => x.DateOfPublish)
+                .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
                 .ToList();
 
             return books;
-
-
         }
 
         public T GetById<T>(int id)

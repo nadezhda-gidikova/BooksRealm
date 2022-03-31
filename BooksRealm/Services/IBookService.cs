@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using BooksRealm.Models.Books;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BooksRealm.Services
 {
     public interface IBookService
     {
+        public  Task<int> CreateAsync(BookFormModel input);
         public Task DeleteAsync(int id);
         IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12);
         public T GetById<T>(int id);
