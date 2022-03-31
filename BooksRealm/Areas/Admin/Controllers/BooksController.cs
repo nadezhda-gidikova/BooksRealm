@@ -48,7 +48,7 @@
             return View(book);
         }
         [HttpPost]
-        public IActionResult Edit(int id,BookFormModel input)
+        public async Task<IActionResult> Edit(int id,BookFormModel input)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +57,7 @@
                 return View(input);
 
             }
-            var edited = this.books.Edit(
+            var edited = await this.books.Edit(
                 id,
                 input.Title,
                 input.Description,
@@ -66,10 +66,10 @@
                 input.AuthorId,
                 input.GenreId);
 
-            //if (!edited)
-            //{
-            //    return BadRequest();
-            //}
+            if (!edited)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction(nameof(All));
             

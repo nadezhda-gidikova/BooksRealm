@@ -72,7 +72,7 @@
 
             return bookNew.Id;
         }
-        public bool Edit(
+        public async Task<bool> Edit(
             int id,
             string title,
             string description,
@@ -81,26 +81,52 @@
              int authorId, 
              int genreId)
         {
-            var bookData = this.booksRepo
-                .AllAsNoTracking()
+            var bookData = this.db
+                .Books
                 .FirstOrDefault(x => x.Id == id);
 
             if (bookData == null)
             {
                 return false;
             }
-            if (!DateTime.TryParseExact(dateOfPublish, "dd-MM-YYYY", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
-                {
+            if (!DateTime.TryParse(dateOfPublish,out DateTime date))
+            {
                 return false;
             }
             bookData.Title = title;
             bookData.Description = description;
             bookData.CoverUrl = coverUrl;
             bookData.DateOfPublish = date;
-
-            bookData.Authors.Add(new AuthorBook { AuthorId = authorId, BookId = id });
-
-             this.booksRepo.SaveChangesAsync();
+           
+            if (!this.db.BookGenres.Any(x => x.BookId == bookData.Id && x.GenreId == genreId))
+            {
+                var genreBook = new BookGenre
+                {
+                    GenreId = genreId,
+                    BookId = bookData.Id,
+                };
+                //bookData.Genres.Clear();
+               //var genres= this.db.BookGenres.Where(x => x.BookId == bookData.Id && x.GenreId == genreId)
+               //     .ToList();
+               // this.db.BookGenres.RemoveRange(genres);
+                bookData.Genres.Add(genreBook);
+                await this.db.BookGenres.AddAsync(genreBook);
+                
+            }
+            if (!this.db.AuthorBooks.Any(x => x.BookId == bookData.Id && x.AuthorId == authorId))
+            {
+                var authorBook = new AuthorBook
+                {
+                    AuthorId = authorId,
+                    BookId = bookData.Id,
+                };
+                //bookData.Authors.Clear();
+                
+                bookData.Authors.Add(authorBook);
+                await this.db.AuthorBooks.AddAsync(authorBook);
+               
+            }
+            await this.db.SaveChangesAsync();
 
             return true;
         }
