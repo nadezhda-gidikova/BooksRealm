@@ -32,7 +32,7 @@ namespace BooksRealm.Controllers
                 return this.NotFound();
             }
 
-            var books = this.bookService.GetByAuthorName<BookInListViewModel>(search, 1, 12);
+            var books = this.bookService.Search<BookInListViewModel>(search, 1, 12);
             return this.View(books);
            
         }

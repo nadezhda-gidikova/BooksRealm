@@ -105,10 +105,7 @@
                     GenreId = genreId,
                     BookId = bookData.Id,
                 };
-                //bookData.Genres.Clear();
-               //var genres= this.db.BookGenres.Where(x => x.BookId == bookData.Id && x.GenreId == genreId)
-               //     .ToList();
-               // this.db.BookGenres.RemoveRange(genres);
+                
                 bookData.Genres.Add(genreBook);
                 await this.db.BookGenres.AddAsync(genreBook);
                 
@@ -120,7 +117,7 @@
                     AuthorId = authorId,
                     BookId = bookData.Id,
                 };
-                //bookData.Authors.Clear();
+               
                 
                 bookData.Authors.Add(authorBook);
                 await this.db.AuthorBooks.AddAsync(authorBook);
@@ -168,7 +165,7 @@
             return query;
 
         }
-        public IEnumerable<T> GetByAuthorName<T>(string searchTerm, int page, int itemsPerPage = 12)
+        public IEnumerable<T> Search<T>(string searchTerm, int page, int itemsPerPage = 12)
         {
             var authors = this.authorRepo.All().OrderBy(x => x.Id)
                 .Where(c => c.Name.StartsWith(searchTerm) ||

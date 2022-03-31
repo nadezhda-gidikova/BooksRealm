@@ -8,7 +8,10 @@
 
     public interface IGenreService
    {
-       public ICollection<GenreViewModel> GetAllAsKeyValuePairs();
-        
+       public ICollection<GenreViewModel> GetAll();
+        public T GetById<T>(int id);
+        public int Add(string name);
+        public int Delete(int id);
+
     }
 }

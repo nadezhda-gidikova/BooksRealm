@@ -3,6 +3,7 @@
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
     using BooksRealm.Models.Genres;
+    using BooksRealm.Services.Mapping;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,7 +17,7 @@
         {
             this.genreRepo = genreRepo;
         }
-        public ICollection<GenreViewModel> GetAllAsKeyValuePairs()
+        public ICollection<GenreViewModel> GetAll()
         {
             return this.genreRepo.AllAsNoTracking()
                 .Select(x => new GenreViewModel
@@ -26,6 +27,36 @@
                 })
                 .OrderBy(x => x.GenreName)
                 .ToList();
+        }
+        public T GetById<T>(int id)
+        {
+            var author = this.genreRepo
+                 .AllAsNoTracking()
+                 .Where(x => x.Id == id)
+                 .To<T>()
+                 .FirstOrDefault();
+
+            return author;
+        }
+        public int Add(string name)
+        {
+            var genre = new Author
+            {
+                Name = name,
+            };
+            this.genreRepo.AddAsync(genre);
+            this.genreRepo.SaveChangesAsync();
+            return genre.Id;
+        }
+
+        public int Delete(int id)
+        {
+            var author = this.authorRepo
+                   .AllAsNoTracking()
+                   .Where(x => x.Id == id)
+                   .FirstOrDefault();
+            this.authorRepo.Delete(author);
+            return author.Id;
         }
     }
 }

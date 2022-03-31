@@ -14,7 +14,7 @@ namespace BooksRealm.Services
         public IEnumerable<T> GetByAuthorId<T>(int authorId);
         public IEnumerable<T> GetByCategory<T>(string categoryName);
         public IEnumerable<T> GetByTitle<T>(string titleName);
-        public IEnumerable<T> GetByAuthorName<T>(string authorName, int page, int itemsPerPage = 12);
+        public IEnumerable<T> Search<T>(string authorName, int page, int itemsPerPage = 12);
         public int GetCount();
         public IEnumerable<T> GetRandom<T>(int count);
         public Task<bool> Edit(

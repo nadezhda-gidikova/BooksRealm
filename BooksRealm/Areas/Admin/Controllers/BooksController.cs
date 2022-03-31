@@ -43,7 +43,7 @@
         {
             var book = this.books.GetById<BookFormModel>(id);
             book.Authors = this.authors.GetAllAuthors();
-            book.Genres = this.genres.GetAllAsKeyValuePairs();
+            book.Genres = this.genres.GetAll();
 
             return View(book);
         }
@@ -53,7 +53,7 @@
             if (!ModelState.IsValid)
             {
                 input.Authors = this.authors.GetAllAuthors();
-                input.Genres = this.genres.GetAllAsKeyValuePairs();
+                input.Genres = this.genres.GetAll();
                 return View(input);
 
             }
@@ -77,22 +77,22 @@
         public IActionResult Add() => View(new BookFormModel
         {
             Authors = this.authors.GetAllAuthors(),
-            Genres=this.genres.GetAllAsKeyValuePairs(),
+            Genres=this.genres.GetAll(),
 
         });
         [HttpPost]
         public async Task<IActionResult> Add(BookFormModel input)
         {
-            
-            //if (!this.(input.AuthorId))
-            //{
-            //    this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
-            //}
+
+            if (!this.authors.Any(input.AuthorId))
+            {
+                this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
+            }
 
             if (!ModelState.IsValid)
             {
                 input.Authors = this.authors.GetAllAuthors();
-                input.Genres = this.genres.GetAllAsKeyValuePairs();
+                input.Genres = this.genres.GetAll();
                 return View(input);
             }
 
