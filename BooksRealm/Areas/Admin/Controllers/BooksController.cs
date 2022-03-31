@@ -1,5 +1,6 @@
 ﻿namespace BooksRealm.Areas.Admin.Controllers
 {
+    using BooksRealm.Infrastructure;
     using BooksRealm.Models.Books;
     using BooksRealm.Services;
     using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@
         private readonly IGenreService genres;
         private readonly IAuthorService authors;
 
+        
         public BooksController(IBookService books,IGenreService genres,IAuthorService authors)
         {
             this.books = books;
@@ -39,16 +41,38 @@
         }
         public IActionResult Edit(int id)
         {
-            
+            var book = this.books.GetById<BookFormModel>(id);
+            book.Authors = this.authors.GetAllAuthors();
+            book.Genres = this.genres.GetAllAsKeyValuePairs();
 
-            return View();
+            return View(book);
         }
         [HttpPost]
         public IActionResult Edit(int id,BookFormModel input)
         {
+            if (!ModelState.IsValid)
+            {
+                input.Authors = this.authors.GetAllAuthors();
+                input.Genres = this.genres.GetAllAsKeyValuePairs();
+                return View(input);
 
+            }
+            var edited = this.books.Edit(
+                id,
+                input.Title,
+                input.Description,
+                input.CoverUrl,
+                input.DateOfPublish.ToString("Y"),
+                input.AuthorId,
+                input.GenreId);
 
-            return View();
+            //if (!edited)
+            //{
+            //    return BadRequest();
+            //}
+
+            return RedirectToAction(nameof(All));
+            
         }
         public IActionResult Add() => View(new BookFormModel
         {

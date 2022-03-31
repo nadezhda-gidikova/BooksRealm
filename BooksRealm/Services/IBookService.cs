@@ -17,6 +17,16 @@ namespace BooksRealm.Services
         public IEnumerable<T> GetByAuthorName<T>(string authorName, int page, int itemsPerPage = 12);
         public int GetCount();
         public IEnumerable<T> GetRandom<T>(int count);
-      
+        public bool Edit(
+            int id,
+            string title,
+            string description,
+            string coverUrl,
+            string dateOfPublish,
+            int authorId,
+            int genreId
+            );
+
+
     }
 }

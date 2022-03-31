@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using BooksRealm.Data;
+using BooksRealm.Services.Mapping;
+
+using AutoMapper;
+using BooksRealm.Data.Models;
 
 namespace BooksRealm.Models.Books
 {
-   
 
-    public class BookFormModel
+
+    public class BookFormModel : IMapFrom<Book>//,IHaveCustomMappings
     {
         [Required]
         [MinLength(DataConstants.Book.TitleMinLength)]
@@ -33,5 +37,7 @@ namespace BooksRealm.Models.Books
         public int GenreId { get; set; }
         public virtual ICollection<AuthorViewModel> Authors { get; set; } = new HashSet<AuthorViewModel>();
         public virtual ICollection<GenreViewModel> Genres { get; set; } = new HashSet<GenreViewModel>();
+
+       
     }
 }

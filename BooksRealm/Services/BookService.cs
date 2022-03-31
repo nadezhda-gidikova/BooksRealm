@@ -10,6 +10,7 @@
     using System;
     using Microsoft.EntityFrameworkCore;
     using BooksRealm.Models.Books;
+    using System.Globalization;
 
     public class BookService : IBookService
     {
@@ -21,11 +22,11 @@
         private readonly IRepository<AuthorBook> authorBookRepo;
 
         public BookService(BooksRealmDbContext db
-            ,IDeletableEntityRepository<Book> booksRepo
+            , IDeletableEntityRepository<Book> booksRepo
             , IDeletableEntityRepository<Author> authorRepo
-            ,IDeletableEntityRepository<Genre>genreRepo
-            ,IRepository<BookGenre>bookGenreRepo,
-            IRepository<AuthorBook>authorBookRepo)
+            , IDeletableEntityRepository<Genre> genreRepo
+            , IRepository<BookGenre> bookGenreRepo,
+            IRepository<AuthorBook> authorBookRepo)
         {
             this.db = db;
             this.booksRepo = booksRepo;
@@ -39,9 +40,9 @@
             var bookNew = new Book
             {
                 Title = input.Title,
-                Description=input.Description,
-                DateOfPublish=input.DateOfPublish,
-                CoverUrl=input.CoverUrl,
+                Description = input.Description,
+                DateOfPublish = input.DateOfPublish,
+                CoverUrl = input.CoverUrl,
             };
             await this.booksRepo.AddAsync(bookNew);
             var auth = this.authorRepo
@@ -68,11 +69,43 @@
             await this.bookGenreRepo.AddAsync(genreBook);
             await this.bookGenreRepo.SaveChangesAsync();
             await this.booksRepo.SaveChangesAsync();
-            
+
             return bookNew.Id;
         }
+        public bool Edit(
+            int id,
+            string title,
+            string description,
+            string coverUrl,
+            string dateOfPublish,
+             int authorId, 
+             int genreId)
+        {
+            var bookData = this.booksRepo
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
 
-            public async Task DeleteAsync(int id)
+            if (bookData == null)
+            {
+                return false;
+            }
+            if (!DateTime.TryParseExact(dateOfPublish, "dd-MM-YYYY", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                {
+                return false;
+            }
+            bookData.Title = title;
+            bookData.Description = description;
+            bookData.CoverUrl = coverUrl;
+            bookData.DateOfPublish = date;
+
+            bookData.Authors.Add(new AuthorBook { AuthorId = authorId, BookId = id });
+
+             this.booksRepo.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task DeleteAsync(int id)
         {
             var book = this.booksRepo.All().FirstOrDefault(x => x.Id == id);
             this.booksRepo.Delete(book);
@@ -135,12 +168,12 @@
                 foreach (var item in authors)
                 {
                     books.AddRange(GetByAuthorId<T>(item));
-                   
+
                 }
                 return books;
             }
-                
-        
+
+
 
             return query;
         }
@@ -174,13 +207,13 @@
         {
             var query = this.booksRepo.All()
                 .Distinct()
-                .Where(x => x.Genres.Any(y => y.Genre.Name == categoryName))               
+                .Where(x => x.Genres.Any(y => y.Genre.Name == categoryName))
                 .OrderBy(x => Guid.NewGuid())
                 .To<T>()
                 .ToList();
             return query;
         }
 
-        
+
     }
 }
