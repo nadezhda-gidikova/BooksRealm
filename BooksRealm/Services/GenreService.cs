@@ -40,7 +40,7 @@
         }
         public int Add(string name)
         {
-            var genre = new Author
+            var genre = new Genre
             {
                 Name = name,
             };
@@ -51,11 +51,11 @@
 
         public int Delete(int id)
         {
-            var author = this.authorRepo
+            var author = this.genreRepo
                    .AllAsNoTracking()
                    .Where(x => x.Id == id)
                    .FirstOrDefault();
-            this.authorRepo.Delete(author);
+            this.genreRepo.Delete(author);
             return author.Id;
         }
     }

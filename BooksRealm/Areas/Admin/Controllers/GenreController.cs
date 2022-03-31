@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class GenreController
+    public class GenreController:AdminController
     {
     }
 }

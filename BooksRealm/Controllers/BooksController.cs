@@ -49,7 +49,7 @@ namespace BooksRealm.Controllers
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                BooksCount = this.bookService.GetCount(),
+                ItemsCount = this.bookService.GetCount(),
                 Books = this.bookService.GetAll<BookInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);

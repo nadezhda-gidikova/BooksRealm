@@ -1,12 +1,15 @@
 ﻿namespace BooksRealm.Models.Authors
 {
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Mapping;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class AuthorInputModel
+    public class AuthorInListViewModel:IMapFrom<Author>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

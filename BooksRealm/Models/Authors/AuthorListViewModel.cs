@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class AuthorInputModel
+    public class AuthorListViewModel:PagingViewModel
     {
-        public string Name { get; set; }
+        public IEnumerable<AuthorInListViewModel> Authors { get; set; } = new List<AuthorInListViewModel>();
     }
 }

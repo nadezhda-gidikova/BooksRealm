@@ -8,6 +8,6 @@ namespace BooksRealm.Data.Models
     {
         [Required]
         public string Name { get; set; }
-        public virtual ICollection<AuthorBook> Books { get; set; }=new HashSet<AuthorBook>();
+        public virtual ICollection<AuthorBook> Books { get; set; } =new HashSet<AuthorBook>();
     }
 }

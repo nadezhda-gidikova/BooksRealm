@@ -34,7 +34,7 @@
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                BooksCount = this.books.GetCount(),
+                ItemsCount = this.books.GetCount(),
                 Books = this.books.GetAll<BookInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
@@ -42,7 +42,7 @@
         public IActionResult Edit(int id)
         {
             var book = this.books.GetById<BookFormModel>(id);
-            book.Authors = this.authors.GetAllAuthors();
+            book.Authors = this.authors.GetAll();
             book.Genres = this.genres.GetAll();
 
             return View(book);
@@ -52,7 +52,7 @@
         {
             if (!ModelState.IsValid)
             {
-                input.Authors = this.authors.GetAllAuthors();
+                input.Authors = this.authors.GetAll();
                 input.Genres = this.genres.GetAll();
                 return View(input);
 
@@ -76,7 +76,7 @@
         }
         public IActionResult Add() => View(new BookFormModel
         {
-            Authors = this.authors.GetAllAuthors(),
+            Authors = this.authors.GetAll(),
             Genres=this.genres.GetAll(),
 
         });
@@ -84,14 +84,14 @@
         public async Task<IActionResult> Add(BookFormModel input)
         {
 
-            if (!this.authors.Any(input.AuthorId))
-            {
-                this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
-            }
+            //if (!this.authors.Any(input.AuthorId))
+            //{
+            //    this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
+            //}
 
             if (!ModelState.IsValid)
             {
-                input.Authors = this.authors.GetAllAuthors();
+                input.Authors = this.authors.GetAll();
                 input.Genres = this.genres.GetAll();
                 return View(input);
             }
@@ -104,13 +104,6 @@
            await books.DeleteAsync(id);
 
             return RedirectToAction(nameof(this.All));
-        }
-
-        public IActionResult ChangeVisibility(int id)
-        {
-            //this.cars.ChangeVisility(id);
-
-            return RedirectToAction(nameof(All));
         }
     }
 }
