@@ -59,15 +59,15 @@
 
             this.TempData[RedirectedFromContactForm] = true;
 
-            return this.RedirectToAction("/Contacts/ThankYou");
+            return this.RedirectToAction("ThankYou");
         }
 
         public IActionResult ThankYou()
         {
-            if (this.TempData[RedirectedFromContactForm] == null)
-            {
-                return this.NotFound();
-            }
+            //if (this.TempData[RedirectedFromContactForm] == null)
+            //{
+            //    return this.NotFound();
+            //}
 
             return this.View();
         }
