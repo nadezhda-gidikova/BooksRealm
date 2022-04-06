@@ -3,7 +3,8 @@
   
         public class WebConstants
         {
-            public const string GlobalMessageKey = "GlobalMessage";
+        public const string SystemEmail = "info@booksrealm.com";
+        public const string GlobalMessageKey = "GlobalMessage";
 
             public class Cache
             {

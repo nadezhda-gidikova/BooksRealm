@@ -23,6 +23,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using BooksRealm.Infrastructure;
+using BooksRealm.Messaging;
 
 namespace BooksRealm
 {
@@ -83,7 +84,7 @@ namespace BooksRealm
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            //services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<ICountService, CountService>();
             services.AddTransient<IRatingsService, RatingsService>();
             services.AddTransient<IBookService, BookService>();
@@ -93,6 +94,7 @@ namespace BooksRealm
             services.AddTransient<IVotesService, VotesService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IDataGathererService, DataGathererService>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

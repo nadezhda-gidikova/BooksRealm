@@ -81,8 +81,8 @@
              int authorId, 
              int genreId)
         {
-            var bookData = this.db
-                .Books
+            var bookData = this.booksRepo.All()
+                
                 .FirstOrDefault(x => x.Id == id);
 
             if (bookData == null)
@@ -98,7 +98,7 @@
             bookData.CoverUrl = coverUrl;
             bookData.DateOfPublish = date;
            
-            if (!this.db.BookGenres.Any(x => x.BookId == bookData.Id && x.GenreId == genreId))
+            if (!this.bookGenreRepo.All().Any(x => x.BookId == bookData.Id && x.GenreId == genreId))
             {
                 var genreBook = new BookGenre
                 {
@@ -107,10 +107,10 @@
                 };
                 
                 bookData.Genres.Add(genreBook);
-                await this.db.BookGenres.AddAsync(genreBook);
-                
+                await this.bookGenreRepo.AddAsync(genreBook);
+                await this.bookGenreRepo.SaveChangesAsync();
             }
-            if (!this.db.AuthorBooks.Any(x => x.BookId == bookData.Id && x.AuthorId == authorId))
+            if (!this.authorBookRepo.All().Any(x => x.BookId == bookData.Id && x.AuthorId == authorId))
             {
                 var authorBook = new AuthorBook
                 {
@@ -120,11 +120,11 @@
                
                 
                 bookData.Authors.Add(authorBook);
-                await this.db.AuthorBooks.AddAsync(authorBook);
-               
+                await this.authorBookRepo.AddAsync(authorBook);
+                await this.authorBookRepo.SaveChangesAsync();
             }
-            await this.db.SaveChangesAsync();
-
+            await this.booksRepo.SaveChangesAsync();
+            
             return true;
         }
 

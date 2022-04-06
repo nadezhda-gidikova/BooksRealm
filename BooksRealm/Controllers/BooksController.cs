@@ -10,14 +10,12 @@ namespace BooksRealm.Controllers
     public class BooksController:Controller
     {
         private readonly IBookService bookService;
-        private readonly IDeletableEntityRepository<Book> bookRepository;
+
 
         public BooksController(IBookService bookService, IDeletableEntityRepository<Book>bookRepository )
         {
             this.bookService = bookService;
-            this.bookRepository = bookRepository;
         }
-        
        
         public IActionResult ByCategory(string categoryName)
         {
