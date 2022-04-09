@@ -19,7 +19,7 @@
                                 <h5 class="card-title">@book.Title</h5>
                             <p class="card-text">Rating: @book.Rating</p>
                             <p class="card-text">Date of publish: @book.DateOfPublish</p>
-                            <p class="card-text">Description: @book.Description.Substring(0,100)...</p>                            
+                                                       
                               
                                 <a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn btn-primary">Go to details</a>
                             </div>

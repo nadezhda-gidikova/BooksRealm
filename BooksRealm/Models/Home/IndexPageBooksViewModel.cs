@@ -12,7 +12,6 @@ namespace BooksRealm.Models.Home
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
         public double Rating { get; set; }
         public DateTime? DateOfPublish { get; set; }
         public string CoverUrl { get; set; }
