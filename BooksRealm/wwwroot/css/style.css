@@ -1713,7 +1713,7 @@ section.hero{
 	color: #a6a6a6;
 }
 
-.blog__details__form form input::-ms-input-placeholder {
+.blog__details__form form input:-ms-input-placeholder {
 	color: #a6a6a6;
 }
 
@@ -1747,7 +1747,7 @@ section.hero{
 	color: #a6a6a6;
 }
 
-.blog__details__form form textarea::-ms-input-placeholder {
+.blog__details__form form textarea:-ms-input-placeholder {
 	color: #a6a6a6;
 }
 
@@ -1824,7 +1824,7 @@ section.hero{
 	color: #b7b7b7;
 }
 
-.login__form form .input__item input::-ms-input-placeholder {
+.login__form form .input__item input:-ms-input-placeholder {
 	color: #b7b7b7;
 }
 

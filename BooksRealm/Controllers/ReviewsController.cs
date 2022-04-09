@@ -3,6 +3,7 @@
     using BooksRealm.Data.Models;
     using BooksRealm.Models.Reviews;
     using BooksRealm.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -21,11 +22,12 @@
             this.reviewService = reviewService;
             this.userManager = userManager;
         }
+        [Authorize]
         [HttpPost]
-        public IActionResult AddReview(ReviewInputModel input)
+        public async Task<IActionResult> AddReview(ReviewInputModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
-            var review = this.reviewService.AddReview(input.ReviewsContent,userId, input.BookId);
+            var review =await  this.reviewService.AddReview(input.Content,userId, input.BookId);
             return Redirect($"/Books/ById/{input.BookId}");
         }
     }

@@ -10,6 +10,6 @@
     public interface IReviewService
 
     {
-        public int AddReview(string text, string userId, int bookId);
+        public Task<int> AddReview(string text, string userId, int bookId);
     }
 }

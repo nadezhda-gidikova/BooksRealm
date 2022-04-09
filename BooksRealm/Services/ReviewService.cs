@@ -16,17 +16,17 @@
         {
             this.reviewRepo = reviewRepo;
         }
-        public int AddReview(string text,string userId, int bookId)
+        public async Task<int> AddReview(string content,string userId, int bookId)
         {
             var review = new Review()
             {
                 BookId = bookId,
-                Content = text,
+                Content = content,
                 UserId = userId,
 
             };
-            this.reviewRepo.AddAsync(review);
-            this.reviewRepo.SaveChangesAsync();
+            await this.reviewRepo.AddAsync(review);
+            await this.reviewRepo.SaveChangesAsync();
             return review.Id;
         }
     }

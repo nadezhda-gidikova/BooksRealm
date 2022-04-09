@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="anime__review__item__text">
                                         <h6>
-                                            @(review.UserName!=null ? @review.UserName : "Anonimous")
+                                            @(review.UserName)
                                         </h6>
                                         <h7>
                                             <p>@review.Content</p>
@@ -110,8 +110,11 @@
                             <div class="section-title">
                                 <h5>Write review</h5>
                             </div>
-                            <form  asp-controller="Reviews" asp-action="AddReview" asp-route-bookId="" method="post">
-                                <textarea placeholder="Your review"></textarea>
+                            <form asp-controller="Reviews" asp-action="AddReview" asp-route-bookId="" method="post">
+                                <input type="hidden" name="BookId" value="@this.Model.Id" />
+                                <input type="hidden" name="ParentId" value="0" />
+                                <label for="Content"></label>
+                                <textarea name="Content" id="Content"placeholder="Your review"></textarea>
                                 <button type="submit"><i class="fa fa-location-arrow"></i>Send review</button>
                             </form>
                         </div>
