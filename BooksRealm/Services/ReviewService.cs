@@ -21,7 +21,7 @@
             var review = new Review()
             {
                 BookId = bookId,
-                Text = text,
+                Content = text,
                 UserId = userId,
 
             };

@@ -4,14 +4,16 @@ using BooksRealm.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BooksRealm.Data.Migrations
 {
     [DbContext(typeof(BooksRealmDbContext))]
-    partial class BooksRealmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220409043647_cangecolumn")]
+    partial class cangecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

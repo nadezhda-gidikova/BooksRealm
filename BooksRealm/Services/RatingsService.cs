@@ -11,16 +11,16 @@ namespace BooksRealm.Services
 { 
 public class RatingsService : IRatingsService
     {
-        private readonly IDeletableEntityRepository<Vote> starRatingsRepository;
+        private readonly IDeletableEntityRepository<Vote> votesRepository;
 
-        public RatingsService(IDeletableEntityRepository<Vote> starRatingsRepository)
+        public RatingsService(IDeletableEntityRepository<Vote> votesRepository)
         {
-            this.starRatingsRepository = starRatingsRepository;
+            this.votesRepository = votesRepository;
         }
 
-        public async Task VoteAsync(int bookId, string userId, int rating)
+        public async Task VoteAsync(int bookId, string userId, int value)
         {
-            var starRating = await this.starRatingsRepository
+            var starRating = await this.votesRepository
                 .All()
                 .FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
 
@@ -31,7 +31,7 @@ public class RatingsService : IRatingsService
                     throw new ArgumentException(ExceptionMessages.AlreadySentVote);
                 }
 
-                starRating.Value += rating;
+                starRating.Value += value;
                 starRating.NextDateRate = DateTime.UtcNow.AddDays(1);
             }
             else
@@ -40,19 +40,19 @@ public class RatingsService : IRatingsService
                 {
                     BookId = bookId,
                     UserId = userId,
-                    Value = rating,
+                    Value = value,
                     NextDateRate = DateTime.UtcNow.AddDays(1),
                 };
 
-                await this.starRatingsRepository.AddAsync(starRating);
+                await this.votesRepository.AddAsync(starRating);
             }
 
-            await this.starRatingsRepository.SaveChangesAsync();
+            await this.votesRepository.SaveChangesAsync();
         }
 
         public async Task<double> GetStarRatingsAsync(int bookId)
         {
-            var starRatings = await this.starRatingsRepository
+            var starRatings = await this.votesRepository
                 .All()
                 .Where(x => x.BookId == bookId)
                 .AverageAsync(x => x.Value);
@@ -62,7 +62,7 @@ public class RatingsService : IRatingsService
 
         public async Task<DateTime> GetNextVoteDateAsync(int bookId, string userId)
         {
-            var starRating = await this.starRatingsRepository
+            var starRating = await this.votesRepository
                 .All()
                 .FirstAsync(x => x.BookId == bookId && x.UserId == userId);
 

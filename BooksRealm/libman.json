@@ -66,6 +66,13 @@
         "media/css/jquery.dataTables.min.css",
         "media/js/jquery.dataTables.min.js"
       ]
+    },
+    {
+      "library": "moment@2.24.0",
+      "destination": "wwwroot/lib/moment/",
+      "files": [
+        "min/moment-with-locales.min.js"
+      ]
     }
   ]
 }

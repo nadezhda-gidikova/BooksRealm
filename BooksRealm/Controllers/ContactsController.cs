@@ -1,15 +1,13 @@
-﻿namespace BooksRealm.Controllers
-{
-    using BooksRealm.Data.Common.Repositories;
-    using BooksRealm.Data.Models;
-    using BooksRealm.Messaging;
-    using BooksRealm.Models.ContactForm;
-    using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using BooksRealm.Data.Common.Repositories;
+using BooksRealm.Data.Models;
+using BooksRealm.Messaging;
+using BooksRealm.Models.ContactForm;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
+namespace BooksRealm.Controllers
+{
+   
     public class ContactsController : Controller
     {
         private const string RedirectedFromContactForm = "RedirectedFromContactForm";
@@ -64,10 +62,10 @@
 
         public IActionResult ThankYou()
         {
-            //if (this.TempData[RedirectedFromContactForm] == null)
-            //{
-            //    return this.NotFound();
-            //}
+            if (this.TempData[RedirectedFromContactForm] == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View();
         }

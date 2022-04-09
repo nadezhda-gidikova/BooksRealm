@@ -4,7 +4,7 @@ namespace BooksRealm.Data.Models
 {
     public class Review: BaseDeletableModel<int>
     {
-        public string Text { get; set; }
+        public string Content { get; set; }
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
         public string UserId { get; set; }

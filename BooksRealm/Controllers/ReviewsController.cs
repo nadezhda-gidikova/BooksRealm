@@ -25,7 +25,7 @@
         public IActionResult AddReview(ReviewInputModel input)
         {
             var userId = this.userManager.GetUserId(this.User);
-            var review = this.reviewService.AddReview(input.ReviewsText,userId, input.BookId);
+            var review = this.reviewService.AddReview(input.ReviewsContent,userId, input.BookId);
             return Redirect($"/Books/ById/{input.BookId}");
         }
     }

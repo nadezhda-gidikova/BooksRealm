@@ -37,8 +37,11 @@ namespace BooksRealm.Models.Books
         {
             configuration.CreateMap<Book, BookViewModel>()
                 .ForMember(x => x.AverageVote, opt =>
-                    opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(v => v.Value)));
-
+                    opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(v => v.Value)))
+            .ForMember(x => x.StarRatingsSum, options =>
+                {
+                    options.MapFrom(m => m.Votes.Sum(st => st.Value));
+                });
         }
 
 

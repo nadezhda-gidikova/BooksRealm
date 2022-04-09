@@ -4,17 +4,23 @@ using BooksRealm.Services;
 using BooksRealm.Models.Books;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Text;
+using BooksRealm.Messaging;
+using System.Linq;
 
 namespace BooksRealm.Controllers
 {
     public class BooksController:Controller
     {
         private readonly IBookService bookService;
+        private readonly IDeletableEntityRepository<Book> bookRepository;
+        private readonly IEmailSender emailSender;
 
-
-        public BooksController(IBookService bookService, IDeletableEntityRepository<Book>bookRepository )
+        public BooksController(IBookService bookService, IDeletableEntityRepository<Book>bookRepository,IEmailSender emailSender )
         {
             this.bookService = bookService;
+            this.bookRepository = bookRepository;
+            this.emailSender = emailSender;
         }
        
         public IActionResult ByCategory(string categoryName)
@@ -65,17 +71,17 @@ namespace BooksRealm.Controllers
             return this.View(book);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> SendToEmail(string id)
-        //{
-        //    var recipe = this.bookService.GetById<BookInListViewModel>(id);
-        //    var html = new StringBuilder();
-        //    html.AppendLine($"<h1>{recipe.Title}</h1>");
-        //    html.AppendLine($"<h3>{recipe.Authors}</h3>");
-        //    html.AppendLine($"<img src=\"{recipe.CoverUrl}\" />");
-        //    //await this.emailSender.SendEmailAsync("recepti@recepti.com", "MoiteRecepti", "gerig14198@questza.com", recipe.Name, html.ToString());
-        //    return this.RedirectToAction(nameof(this.ById), new { id });
-        //}
+        [HttpPost]
+        public async Task<IActionResult> SendToEmail(int id)
+        {
+            var recipe = this.bookService.GetById<BookInListViewModel>(id);
+            var html = new StringBuilder();
+            html.AppendLine($"<h1>{recipe.Title}</h1>");
+            html.AppendLine($"<h3>{recipe.Authors.First()}</h3>");
+            html.AppendLine($"<img src=\"{recipe.CoverUrl}\" />");
+            await this.emailSender.SendEmailAsync("recepti@recepti.com", "MoiteRecepti", "gerig14198@questza.com", recipe.Title, html.ToString());
+            return this.RedirectToAction(nameof(this.ById), new { id });
+        }
 
 
     }

@@ -1035,13 +1035,31 @@ section.hero{
 	right: 100px;
 	top: 20px;
 }
-	.anime__details__rating li {
+	.anime__details__rating li{
 		display: inline-block;
 		list-style: none;
 		
 	}
+.stars_ratings li{
+	
+	display: inline-block;
+	list-style: none;
+}
+.fas {
+	color: orange;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: orange;
+	margin-left: 1px;
+}
+.fa.fa-star-o {
+	color: orange;
+	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: orange;
+	margin-left: 1px;
+}
 
-.anime__details__rating .rating i {
+
+.anime__details__rating .stars_ratings i {
 	font-size: 24px;
 	color: #e89f12;
 	display: inline-block;

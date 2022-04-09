@@ -101,7 +101,7 @@ namespace BooksRealm.Services
                         var rev = new Review
                         {
                             BookId = newBook.Id,
-                            Text = review,
+                            Content = review,
 
                         };
                         await this.reviewRepository.AddAsync(rev);
