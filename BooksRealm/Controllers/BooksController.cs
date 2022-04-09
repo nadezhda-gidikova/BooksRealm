@@ -26,6 +26,7 @@ namespace BooksRealm.Controllers
         public IActionResult ByCategory(string categoryName)
         {
             var books = this.bookService.GetByCategory<BookInListViewModel>(categoryName);
+            ViewBag.Category = categoryName;
             return this.View(books);
         }
         [HttpPost]
