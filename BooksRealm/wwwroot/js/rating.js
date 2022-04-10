@@ -17,7 +17,10 @@
         }
 
         if (rating_number >= 0.5) {
-            stars[counter].className = "fas fa-star-half-full fa-2x";
+            stars[counter++].className = "fa fa-star-half-empty fa-2x";
+        }
+        for (var i = counter; i < 5; i++) {
+            stars[counter++].className = "fa fa-star-o fa-2x";
         }
     }
 }

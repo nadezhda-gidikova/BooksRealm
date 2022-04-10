@@ -1047,13 +1047,19 @@ section.hero{
 }
 .fas {
 	color: orange;
-	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-width: 2px;
 	-webkit-text-stroke-color: orange;
 	margin-left: 1px;
 }
 .fa.fa-star-o {
 	color: orange;
 	-webkit-text-stroke-width: 2px;
+	-webkit-text-stroke-color: orange;
+	margin-left: 1px;
+}
+.fa.fa-star-half-empty {
+	color: orange;
+	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: orange;
 	margin-left: 1px;
 }
