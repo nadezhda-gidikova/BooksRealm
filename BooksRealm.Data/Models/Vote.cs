@@ -10,7 +10,7 @@ namespace BooksRealm.Data.Models
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
         [ForeignKey(nameof(User))]
-        public virtual string UserId { get; set; }
+        public string UserId { get; set; }
         public virtual BooksRealmUser User { get; set; }
         public int Value { get; set; }
         public DateTime NextDateRate { get; set; }

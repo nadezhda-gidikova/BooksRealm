@@ -20,114 +20,118 @@
                                 By:
                                 @foreach (var auth in @Model.Authors)
                                 {
-                                    <span>@auth.AuthorName</span>
+                                    <span class="text-white">@auth.AuthorName</span>
                                 }
                             </span>
 
                             <form id="starRatingsForm" method="post"></form>
                         </div>
-                            <div class="stars_ratings inline-block float-right col-md-4">
-                                <ul class="w3l-ratings">
-                                    <li>
-                                        <a href="#@Model.Id" onclick="sendRating(@Model.Id, 1)">
-                                            <i class="fa fa-star-o fa-2x"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#@Model.Id" onclick="sendRating(@Model.Id, 2)">
-                                            <i class="fa fa-star-o fa-2x text-yellow" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#@Model.Id" onclick="sendRating(@Model.Id, 3)">
-                                            <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#@Model.Id" onclick="sendRating(@Model.Id, 4)">
-                                            <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#@Model.Id" onclick="sendRating(@Model.Id, 5)">
-                                            <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="text-white-50" id="starRatingsSum_@Model.Id">@Model.StarRatingsSum.ToString("0.0") / 5</div>
-                            </div>
-                            <div class="clearfix"></div>
-                       
+                        <div class="stars_ratings inline-block float-right col-md-4">
+                            <ul class="w3l-ratings">
+                                <li>
+                                    <a href="#@Model.Id" onclick="sendRating(@Model.Id, 1)">
+                                        <i class="fa fa-star-o fa-2x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#@Model.Id" onclick="sendRating(@Model.Id, 2)">
+                                        <i class="fa fa-star-o fa-2x text-yellow" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#@Model.Id" onclick="sendRating(@Model.Id, 3)">
+                                        <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#@Model.Id" onclick="sendRating(@Model.Id, 4)">
+                                        <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#@Model.Id" onclick="sendRating(@Model.Id, 5)">
+                                        <i class="fa fa-star-o fa-2x" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="text-white-50" id="starRatingsSum_@Model.Id">@Model.StarRatingsSum.ToString("0.0") / 5</div>
+                        </div>
+                        <div class="clearfix"></div>
+
                         <p>@Model.Description</p>
                         <div class="anime__details__widget">
                             <div class="row">
-                                <div class="col-lg-9 col-md-9">
+                                <div class="col-lg-8 col-md-8 text-white-50">
+
+                                    <div class="text-muted small">
+                                        <time datetime="@Model.DateOfPublish.ToString("Y")"></time>
+                                    </div>
+                                   Date of publish:<span class="text-white"> @Model.DateOfPublish.ToString("Y")</span>
+
+                                </div>
+                                <div class="col-lg-8 col-md-6 text-white-50">
+
+                                    Categories:
                                     <ul>
-                                        <li>
-                                            <div class="text-muted small">
-                                                <time datetime="@Model.DateOfPublish.ToString("Y")"></time>
-                                            </div>
-                                        <span>Date of publish:</span>@Model.DateOfPublish.ToString("Y")</li>
-                                    </ul>
-                                    <div class="col-lg-8 col-md-6">
-                                        <ul>
+                                        @foreach (var auth in @Model.Genres)
+                                        {
+
                                             <li>
-                                                <span>Category:</span>
-                                                @foreach (var auth in @Model.Genres)
-                                                {
-                                                <li>
-                                                    @auth.GenreName
-                                                </li>
-                                            }
-                                            </ul>
-                                        </div>
+                                                @auth.GenreName
+                                            </li>
+
+                                        }
+                                    </ul>
                                     </div>
-                                </div>
                             </div>
+
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-8 col-md-8">
-                        <div class="anime__details__review">
-                            <div class="section-title">
-                                <h5>Reviews</h5>
-                            </div>
-                            @foreach (var review in @Model.Reviews)
-                            {
-                                <div class="anime__review__item">
-                                    <div class="anime__review__item__pic">
-                                        <img src="~/img/user.png" alt="">
-                                    </div>
-                                    <div class="anime__review__item__text">
-                                        <h6>
-                                            @(review.UserName)
-                                        </h6>
-                                        <h7>
-                                            <p>@review.Content</p>
-                                        </h7>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="anime__details__form">
-                            <div class="section-title">
-                                <h5>Write review</h5>
-                            </div>
-                            <form asp-controller="Reviews" asp-action="AddReview" asp-route-bookId="" method="post">
-                                <input type="hidden" name="BookId" value="@this.Model.Id" />
-                                <input type="hidden" name="ParentId" value="0" />
-                                <label for="Content"></label>
-                                <textarea name="Content" id="Content"placeholder="Your review"></textarea>
-                                <button type="submit"><i class="fa fa-location-arrow"></i>Send review</button>
-                            </form>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="anime__details__review">
+                        <div class="section-title">
+                            <h5>Reviews</h5>
+                        </div>
+                        @foreach (var review in @Model.Reviews)
+                        {
+                            <div class="anime__review__item">
+                                <div class="anime__review__item__pic">
+                                    <img src="~/img/user.png" alt="">
+                                </div>
+                                <div class="anime__review__item__text">
+                                    <h6>
+                                        <span class="text-white">@(review.UserUserName==null?"Anonimous":review.UserUserName)</span>
 
-    
+                                        <span class="float-right text-white">@(review.CreatedOn.ToString("D"))</span>
+
+                                    </h6>
+                                    <h7>
+                                        <p>@review.SanitaizedContent</p>
+                                    </h7>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="anime__details__form">
+                        <div class="section-title">
+                            <h5>Write review</h5>
+                        </div>
+                        <form asp-controller="Reviews" asp-action="AddReview" asp-route-bookId="" method="post">
+                            <input type="hidden" name="BookId" value="@this.Model.Id" />
+                            <input type="hidden" name="ParentId" value="0" />
+                            <label for="Content"></label>
+                            <textarea name="Content" id="Content" placeholder="Your review"></textarea>
+                            <button type="submit"><i class="fa fa-location-arrow"></i>Send review</button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
