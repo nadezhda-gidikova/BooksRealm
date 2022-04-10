@@ -20,38 +20,39 @@ public class RatingsService : IRatingsService
 
         public async Task VoteAsync(int bookId, string userId, int value)
         {
-            var starRating = await this.votesRepository
+            var vote = await this.votesRepository
                 .All()
                 .FirstOrDefaultAsync(x => x.BookId == bookId && x.UserId == userId);
 
-            if (starRating != null)
+            if (vote != null)
             {
-                if (DateTime.UtcNow < starRating.NextDateRate)
+                if (DateTime.UtcNow < vote.NextDateRate)
                 {
                     throw new ArgumentException(ExceptionMessages.AlreadySentVote);
                 }
 
-                starRating.Value += value;
-                starRating.NextDateRate = DateTime.UtcNow.AddDays(1);
+                vote.Value = value;
+                vote.NextDateRate = DateTime.UtcNow.AddDays(0);
             }
             else
             {
-                starRating = new Vote
+                vote = new Vote
                 {
                     BookId = bookId,
                     UserId = userId,
                     Value = value,
-                    NextDateRate = DateTime.UtcNow.AddDays(1),
+                    NextDateRate = DateTime.UtcNow.AddDays(0),
                 };
 
-                await this.votesRepository.AddAsync(starRating);
+                await this.votesRepository.AddAsync(vote);
             }
 
             await this.votesRepository.SaveChangesAsync();
+
         }
 
         public async Task<double> GetStarRatingsAsync(int bookId)
-        {
+         {
             var starRatings = await this.votesRepository
                 .All()
                 .Where(x => x.BookId == bookId)

@@ -19,29 +19,18 @@ namespace BooksRealm.Models.Books
         public DateTime DateOfPublish { get; set; }
         public string CoverUrl { get; set; }
         public double Vote { get; set; }
-        public double AverageVote { get; set; }
-        public int StarRatingsSum { get; set; }  
+        public double AverageVote { get; set; }  
 
         public ICollection<AuthorViewModel> Authors { get; set; } = new HashSet<AuthorViewModel>();
         public ICollection<ReviewViewModel> Reviews { get; set; } = new HashSet<ReviewViewModel>();
         public ICollection<GenreViewModel> Genres { get; set; } = new HashSet<GenreViewModel>();
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration.CreateMap<Book, BookViewModel>()
-        //        .ForMember(x => x.StarRatingsSum, options =>
-        //        {
-        //            options.MapFrom(m => m.Votes.Sum(st => st.Value));
-        //        });
-        //}
+        
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Book, BookViewModel>()
                 .ForMember(x => x.AverageVote, opt =>
-                    opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(v => v.Value)))
-            .ForMember(x => x.StarRatingsSum, opt =>
-                    opt.MapFrom(m => m.Votes.Sum(st => st.Value)));
-            //.ForMember(x => x.Reviews, opt =>
-            //   opt.MapFrom(x => x.Reviews.OrderByDescending(x => x.Id).Take(5)));
+                    opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(v => v.Value)));
+            
         }
 
 

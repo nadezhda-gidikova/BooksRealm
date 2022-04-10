@@ -90,8 +90,6 @@ namespace BooksRealm
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IGenreService, GenreService>();
             services.AddTransient<IAuthorService, AuthorService>();
-
-            services.AddTransient<IVotesService, VotesService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IDataGathererService, DataGathererService>();
            

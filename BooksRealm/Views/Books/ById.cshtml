@@ -54,7 +54,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div class="text-white-50" id="starRatingsSum_@Model.Id">@Model.StarRatingsSum.ToString("0.0") / 5</div>
+                            <div class="text-white-50" id="starRatingsSum_@Model.Id">@Model.AverageVote.ToString("0.0") / 5</div>
                         </div>
                         <div class="clearfix"></div>
 
@@ -66,7 +66,7 @@
                                     <div class="text-muted small">
                                         <time datetime="@Model.DateOfPublish.ToString("Y")"></time>
                                     </div>
-                                   Date of publish:<span class="text-white"> @Model.DateOfPublish.ToString("Y")</span>
+                                   Date of publish:<span class="text-white"><time datetime="@Model.DateOfPublish.ToString("Y")"></time></span>
 
                                 </div>
                                 <div class="col-lg-8 col-md-6 text-white-50">
@@ -105,7 +105,7 @@
                                     <h6>
                                         <span class="text-white">@(review.UserUserName==null?"Anonimous":review.UserUserName)</span>
 
-                                        <span class="float-right text-white">@(review.CreatedOn.ToString("D"))</span>
+                                        <span class="float-right text-white"><time datetime="@review.CreatedOn.ToString("D")"></time></span>
 
                                     </h6>
                                     <h7>
