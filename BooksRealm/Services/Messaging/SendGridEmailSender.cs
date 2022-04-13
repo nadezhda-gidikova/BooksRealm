@@ -20,62 +20,41 @@
             this.client = new SendGridClient(apiKey);
         }
 
-        public async Task SendEmailAsync(string from, string fromName, string to, string subject, string htmlContent, IEnumerable<EmailAttachment> attachments = null)
+        public async Task SendEmailAsync(
+           string to,
+           string subject,
+           string htmlContent,
+           string fromName = WebConstants.SystemName,
+           string from = WebConstants.SystemEmail,
+           IEnumerable<EmailAttachment> attachments = null)
         {
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
                 throw new ArgumentException("Subject and message should be provided.");
             }
-            using var message = new MailMessage();
-            message.From = new MailAddress(
-                from,
-                fromName
-            );
-            message.To.Add(new MailAddress(
-    to,
-    null
-));
-            message.Subject = subject;
-            var textBody = htmlContent;
-            var htmlBody = "and easy to do anywhere, <b>especially with C#</b>";
 
-            message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(
-                textBody, null, MediaTypeNames.Text.Plain)
-            );
-            message.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(
-                htmlBody, null, MediaTypeNames.Text.Html)
-            );
-            using var client = new SmtpClient(host: "smtp.sendgrid.net", port: 587);
-            client.Credentials = new NetworkCredential(
-                userName: "apikey", // the userName is the exact string "apikey" and not the API key itself.
-                password: "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"
-            );
+            var fromAddress = new EmailAddress(from, fromName);
+            var toAddress = new EmailAddress(to);
+            var message = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, null, htmlContent);
+            if (attachments?.Any() == true)
+            {
+                foreach (var attachment in attachments)
+                {
+                    message.AddAttachment(attachment.FileName, Convert.ToBase64String(attachment.Content), attachment.MimeType);
+                }
+            }
 
-            Console.WriteLine("Sending email");
-            await client.SendMailAsync(message);
-            Console.WriteLine("Email sent");
-            //var fromAddress = new EmailAddress(from, fromName);
-            //var toAddress = new EmailAddress(to);
-            //var message = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, null, htmlContent);
-            //if (attachments?.Any() == true)
-            //{
-            //    foreach (var attachment in attachments)
-            //    {
-            //        message.AddAttachment(attachment.FileName, Convert.ToBase64String(attachment.Content), attachment.MimeType);
-            //    }
-            //}
-
-            //try
-            //{
-            //    var response = await this.client.SendEmailAsync(message);
-            //    Console.WriteLine(response.StatusCode);
-            //    Console.WriteLine(await response.Body.ReadAsStringAsync());
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e);
-            //    throw;
-            //}
+            try
+            {
+                var response = await this.client.SendEmailAsync(message);
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(await response.Body.ReadAsStringAsync());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

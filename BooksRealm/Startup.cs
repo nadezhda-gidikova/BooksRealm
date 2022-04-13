@@ -1,32 +1,25 @@
-using BooksRealm.Services;
-using BooksRealm.Data;
-using BooksRealm.Data.Common;
-using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
-using BooksRealm.Data.Repositories;
-using BooksRealm.Models;
-using BooksRealm.Services.Mapping;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using BooksRealm.Infrastructure;
-using BooksRealm.Messaging;
-
 namespace BooksRealm
 {
+    using BooksRealm.Services;
+    using BooksRealm.Data;
+    using BooksRealm.Data.Common;
+    using BooksRealm.Data.Common.Repositories;
+    using BooksRealm.Data.Models;
+    using BooksRealm.Data.Repositories;
+    using BooksRealm.Models;
+    using BooksRealm.Services.Mapping;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using System.Reflection;
+    using BooksRealm.Infrastructure;
+    using BooksRealm.Messaging;
+
     public class Startup
     {
         private readonly IConfiguration configuration;

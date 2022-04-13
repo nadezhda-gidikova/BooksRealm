@@ -14,21 +14,19 @@
 
     public class BookService : IBookService
     {
-        private readonly BooksRealmDbContext db;
         private readonly IDeletableEntityRepository<Book> booksRepo;
         private readonly IDeletableEntityRepository<Author> authorRepo;
         private readonly IDeletableEntityRepository<Genre> genreRepo;
         private readonly IRepository<BookGenre> bookGenreRepo;
         private readonly IRepository<AuthorBook> authorBookRepo;
 
-        public BookService(BooksRealmDbContext db
-            , IDeletableEntityRepository<Book> booksRepo
+        public BookService(
+             IDeletableEntityRepository<Book> booksRepo
             , IDeletableEntityRepository<Author> authorRepo
             , IDeletableEntityRepository<Genre> genreRepo
             , IRepository<BookGenre> bookGenreRepo,
             IRepository<AuthorBook> authorBookRepo)
         {
-            this.db = db;
             this.booksRepo = booksRepo;
             this.authorRepo = authorRepo;
             this.genreRepo = genreRepo;
