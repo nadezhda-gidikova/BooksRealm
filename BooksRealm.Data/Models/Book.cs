@@ -2,18 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static BooksRealm.Data.DataConstants.Book;
+
 
 namespace BooksRealm.Data.Models
 {
     public class Book:BaseDeletableModel<int>
-    {      
+    {
         [Required]
+        [MaxLength(TitleMaxLength)]
         public string Title { get; set; }
 
         [Required]
+        [MaxLength(DescriptionMaxLength)]
+
         public string Description { get; set; }
 
         public double Rating { get; set; }
+
+        [Required]
 
         public DateTime DateOfPublish { get; set; }
 

@@ -2,6 +2,7 @@
 using BooksRealm.Data.Models;
 using BooksRealm.Messaging;
 using BooksRealm.Models.ContactForm;
+using BooksRealm.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,16 +11,11 @@ namespace BooksRealm.Controllers
    
     public class ContactsController : Controller
     {
-        private const string RedirectedFromContactForm = "RedirectedFromContactForm";
+        private readonly IContactService contactsService;
 
-        private readonly IRepository<ContactFormEntry> contactsRepository;
-
-        private readonly IEmailSender emailSender;
-
-        public ContactsController(IRepository<ContactFormEntry> contactsRepository, IEmailSender emailSender)
+        public ContactsController(IContactService contactsService)
         {
-            this.contactsRepository = contactsRepository;
-            this.emailSender = emailSender;
+            this.contactsService = contactsService;
         }
 
         public IActionResult Index()
@@ -28,45 +24,20 @@ namespace BooksRealm.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(ContactFormViewModel model)
+        public async Task<IActionResult> Index(ContactFormViewModel contactFormViewModel)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(contactFormViewModel);
             }
 
-            // TODO: Extract to IP provider (service)
-            var ip = this.HttpContext.Connection.RemoteIpAddress.ToString();
-            var contactFormEntry = new ContactFormEntry
-            {
-                Name = model.Name,
-                Email = model.Email,
-                Title = model.Title,
-                Content = model.Content,
-                Ip = ip,
-            };
-            await this.contactsRepository.AddAsync(contactFormEntry);
-            await this.contactsRepository.SaveChangesAsync();
-
-            await this.emailSender.SendEmailAsync(
-                model.Email,
-                model.Name,
-                WebConstants.SystemEmail,
-                model.Title,
-                model.Content);
-
-            this.TempData[RedirectedFromContactForm] = true;
+            await this.contactsService.SendContactToAdmin(contactFormViewModel);
 
             return this.RedirectToAction("ThankYou");
         }
 
         public IActionResult ThankYou()
         {
-            if (this.TempData[RedirectedFromContactForm] == null)
-            {
-                return this.NotFound();
-            }
-
             return this.View();
         }
     }

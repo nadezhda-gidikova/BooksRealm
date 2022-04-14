@@ -20,9 +20,9 @@
             public string Email { get; set; }
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Please input message title")]
-            [StringLength(100, ErrorMessage = "Title must be atleast {2} and not more than {1} symbol.", MinimumLength = 5)]
-            [Display(Name = "Message title")]
-            public string Title { get; set; }
+            [StringLength(100, ErrorMessage = "Subject must be atleast {2} and not more than {1} symbol.", MinimumLength = 5)]
+            [Display(Name = "Subject of the message")]
+            public string Subject { get; set; }
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Please input message content")]
             [StringLength(10000, ErrorMessage = "Message must be atleast {2} symbols.", MinimumLength = 20)]

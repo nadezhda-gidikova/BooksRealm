@@ -11,6 +11,7 @@
     using Microsoft.EntityFrameworkCore;
     using BooksRealm.Models.Books;
     using System.Globalization;
+    using BooksRealm.Data.Common;
 
     public class BookService : IBookService
     {
@@ -42,6 +43,11 @@
                 DateOfPublish = input.DateOfPublish,
                 CoverUrl = input.CoverUrl,
             };
+            if (booksRepo.All().Any(x=>x.Title==bookNew.Title))
+            {
+                throw new ArgumentException(
+                   string.Format(ExceptionMessages.BookAlreadyExists,input.Title));
+            }
             await this.booksRepo.AddAsync(bookNew);
             var auth = this.authorRepo
                 .AllAsNoTracking()
@@ -89,7 +95,8 @@
             }
             if (!DateTime.TryParse(dateOfPublish,out DateTime date))
             {
-                return false;
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.BookNotFound, id));
             }
             bookData.Title = title;
             bookData.Description = description;
@@ -129,41 +136,49 @@
         public async Task DeleteAsync(int id)
         {
             var book = this.booksRepo.All().FirstOrDefault(x => x.Id == id);
+            if (book == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.BookNotFound, id));
+            }
             this.booksRepo.Delete(book);
             await this.booksRepo.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage = 12)
         {
-            var books = this.booksRepo.AllAsNoTracking()
+            var books =await this.booksRepo.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return books;
         }
 
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var book = this.booksRepo.AllAsNoTracking()
+            var book =await this.booksRepo.All()
                 .Where(x => x.Id == id)
                 .To<T>()
-                .FirstOrDefault();
-
+                .FirstOrDefaultAsync();
+            if (book == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.BookNotFound, id));
+            }
             return book;
         }
 
-        public IEnumerable<T> GetByAuthorId<T>(int authorId)
+        public async Task<IEnumerable<T>> GetByAuthorIdAsync<T>(int authorId)
         {
-            var query = this.booksRepo.All()
+            var query =await this.booksRepo.All()
                 .Where(x => x.Authors.Any(y => y.AuthorId == authorId))
                 .To<T>()
-                .ToList();
+                .ToListAsync();
+            
             return query;
 
         }
-        public IEnumerable<T> Search<T>(string searchTerm, int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> Search<T>(string searchTerm, int page, int itemsPerPage = 12)
         {
             var authors = this.authorRepo.All().OrderBy(x => x.Id)
                 .Where(c => c.Name.StartsWith(searchTerm) ||
@@ -188,50 +203,47 @@
                 List<T> books = new List<T>();
                 foreach (var item in authors)
                 {
-                    books.AddRange(GetByAuthorId<T>(item));
+                    books.AddRange(await GetByAuthorIdAsync<T>(item));
 
                 }
                 return books;
             }
-
-
-
             return query;
         }
-        public IEnumerable<T> GetByTitle<T>(string titleName)
+        public async Task<IEnumerable<T>> GetByTitle<T>(string titleName)
         {
-            var query = this.booksRepo.All()
+            var query =await this.booksRepo.All()
                 .Where(x => (!String.IsNullOrEmpty(x.Title) && x.Title.Contains(titleName))
                 || x.Title == titleName)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return query;
 
         }
 
-        public int GetCount()
+        public async Task<int> GetCountAsync()
         {
-            return this.booksRepo.All().Count();
+            return await this.booksRepo.All().CountAsync();
         }
 
-        public IEnumerable<T> GetRandom<T>(int count)
+        public async Task<IEnumerable<T>> GetRandomAsync<T>(int count)
         {
-            var books = this.booksRepo.All()
+            var books = await this.booksRepo.All()
                 .OrderBy(x => Guid.NewGuid())
                 .Take(count)
-                .To<T>().ToList();
+                .To<T>().ToListAsync();
             return books;
         }
 
-        public IEnumerable<T> GetByCategory<T>(string categoryName)
+        public async Task<IEnumerable<T>> GetByCategory<T>(string categoryName)
         {
-            var query = this.booksRepo.All()
-                .Distinct()
+            var query =await this.booksRepo.All()
                 .Where(x => x.Genres.Any(y => y.Genre.Name == categoryName))
                 .OrderBy(x => Guid.NewGuid())
+                .Distinct()
                 .To<T>()
-                .ToList();
+                .ToListAsync();
             return query;
         }
 

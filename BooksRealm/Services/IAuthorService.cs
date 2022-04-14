@@ -10,16 +10,17 @@
 
     public interface IAuthorService
     {
-        public IEnumerable<T> GetAllInLIst<T>(int page, int itemsPerPage = 12);
-        public ICollection<AuthorViewModel> GetAll();
+        public Task<IEnumerable<T>> GetAllInLIstAsync<T>(int page, int itemsPerPage = 12);
 
-        public T GetById<T>(int id);
+        public Task<ICollection<T>> GetAllAsync<T>();
+
+        public Task<T> GetByIdAsync<T>(int id);
 
         public Task<int> AddAsync(string name);
 
         public Task<int> DeleteAsync(int id);
 
-        public int GetCount();
+        public Task<int> GetCountAsync();
 
 
     }

@@ -4,6 +4,7 @@ using BooksRealm.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace BooksRealm.Controllers
 {
@@ -20,9 +21,9 @@ namespace BooksRealm.Controllers
             this.countService = countService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var countsDto = this.countService.GetCounts();
+            var countsDto =this.countService.GetCounts();
             //// var viewModel2 = AutoMapperConfig.MapperInstance.Map<IndexViewModel>(countsDto);
             //// var viewModel = this.mapper.Map<IndexViewModel>(countsDto);
             var viewModel = new IndexViewModel
@@ -31,7 +32,7 @@ namespace BooksRealm.Controllers
                 AuthorsCount = countsDto.AuthorsCount,
                 ReviewsCount=countsDto.ReviewsCount,
                 GenresCount=countsDto.GenresCount,
-                RandomBooks = this.bookService.GetRandom<IndexPageBooksViewModel>(12),
+                RandomBooks = await this.bookService.GetRandomAsync<IndexPageBooksViewModel>(12),
             };
             return this.View(viewModel);
         }
@@ -42,9 +43,15 @@ namespace BooksRealm.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(HttpErrorViewModel errorViewModel)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (errorViewModel.StatusCode == 404)
+            {
+                return this.View(errorViewModel);
+            }
+            return this.View(
+               "Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+            
         }
     }
 }

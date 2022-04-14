@@ -23,25 +23,25 @@ namespace BooksRealm.Controllers
             this.emailSender = emailSender;
         }
        
-        public IActionResult ByCategory(string categoryName)
+        public async Task<IActionResult> ByCategory(string categoryName)
         {
-            var books = this.bookService.GetByCategory<BookInListViewModel>(categoryName);
-            ViewBag.Category = categoryName;
+            var books =await this.bookService.GetByCategory<BookInListViewModel>(categoryName);
+            //ViewBag.Category = categoryName;
             return this.View(books);
         }
         [HttpPost]
-        public IActionResult Search(string search,int id=1)
+        public async Task<IActionResult> Search(string search,int id=1)
         {
             if (search == null)
             {
                 return this.NotFound();
             }
 
-            var books = this.bookService.Search<BookInListViewModel>(search, 1, 12);
+            var books =await this.bookService.Search<BookInListViewModel>(search, 1, 12);
             return this.View(books);
            
         }
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -54,33 +54,33 @@ namespace BooksRealm.Controllers
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                ItemsCount = this.bookService.GetCount(),
-                Books = this.bookService.GetAll<BookInListViewModel>(id, ItemsPerPage),
+                ItemsCount = await this.bookService.GetCountAsync(),
+                Books = await this.bookService.GetAllAsync<BookInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
         }
        
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
-            var book = this.bookService.GetById<BookViewModel>(id);
+            var book =await this.bookService.GetByIdAsync<BookViewModel>(id);
             return this.View(book);
         }
 
         public IActionResult Details(int id)
         {
-            var book = this.bookService.GetById<BookViewModel>(id);
+            var book = this.bookService.GetByIdAsync<BookViewModel>(id);
             return this.View(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> SendToEmail(int id)
         {
-            var recipe = this.bookService.GetById<BookInListViewModel>(id);
+            var book = await this.bookService.GetByIdAsync<BookInListViewModel>(id);
             var html = new StringBuilder();
-            html.AppendLine($"<h1>{recipe.Title}</h1>");
-            html.AppendLine($"<h3>{recipe.Authors.First()}</h3>");
-            html.AppendLine($"<img src=\"{recipe.CoverUrl}\" />");
-            await this.emailSender.SendEmailAsync("recepti@recepti.com", "MoiteRecepti", "gerig14198@questza.com", recipe.Title, html.ToString());
+            html.AppendLine($"<h1>{book.Title}</h1>");
+            html.AppendLine($"<h3>{book.Authors.First()}</h3>");
+            html.AppendLine($"<img src=\"{book.CoverUrl}\" />");
+            await this.emailSender.SendEmailAsync("info@booksrealm.com", "Booksrealm", "nadezhda_gidikova@yahoo.com", book.Title, html.ToString());
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 

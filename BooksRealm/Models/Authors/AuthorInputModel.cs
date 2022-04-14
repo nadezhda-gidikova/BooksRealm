@@ -1,12 +1,13 @@
 ﻿namespace BooksRealm.Models.Authors
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using System.ComponentModel.DataAnnotations;
+    using static BooksRealm.Data.DataConstants.User;
 
     public class AuthorInputModel
     {
+        [Required]
+        [MinLength(FullNameMinLength)]
+        [MaxLength(FullNameMaxLength)]
         public string Name { get; set; }
     }
 }

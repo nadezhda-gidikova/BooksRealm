@@ -1,7 +1,9 @@
 ﻿namespace BooksRealm.Areas.Admin.Controllers
 {
     using BooksRealm.Infrastructure;
+    using BooksRealm.Models.Authors;
     using BooksRealm.Models.Books;
+    using BooksRealm.Models.Genres;
     using BooksRealm.Services;
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
@@ -21,7 +23,7 @@
             this.authors = authors;
         }
 
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -34,16 +36,16 @@
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                ItemsCount = this.books.GetCount(),
-                Books = this.books.GetAll<BookInListViewModel>(id, ItemsPerPage),
+                ItemsCount =await this.books.GetCountAsync(),
+                Books = await this.books.GetAllAsync<BookInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
         }
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var book = this.books.GetById<BookFormModel>(id);
-            book.Authors = this.authors.GetAll();
-            book.Genres = this.genres.GetAll();
+            var book = await this.books.GetByIdAsync<BookFormModel>(id);
+            book.Authors =await this.authors.GetAllAsync<AuthorViewModel>();
+            book.Genres =await  this.genres.GetAllAsync<GenreViewModel>();
 
             return View(book);
         }
@@ -52,8 +54,8 @@
         {
             if (!ModelState.IsValid)
             {
-                input.Authors = this.authors.GetAll();
-                input.Genres = this.genres.GetAll();
+                input.Authors =await this.authors.GetAllAsync<AuthorViewModel>();
+                input.Genres =await this.genres.GetAllAsync<GenreViewModel>();
                 return View(input);
 
             }
@@ -74,10 +76,10 @@
             return RedirectToAction(nameof(All));
             
         }
-        public IActionResult Add() => View(new BookFormModel
+        public async Task<IActionResult> Add() => View(new BookFormModel
         {
-            Authors = this.authors.GetAll(),
-            Genres=this.genres.GetAll(),
+            Authors = await this .authors.GetAllAsync<AuthorViewModel>(),
+            Genres=await this.genres.GetAllAsync<GenreViewModel>(),
 
         });
         [HttpPost]
@@ -91,8 +93,8 @@
 
             if (!ModelState.IsValid)
             {
-                input.Authors = this.authors.GetAll();
-                input.Genres = this.genres.GetAll();
+                input.Authors = await this.authors.GetAllAsync<AuthorViewModel>();
+                input.Genres = await this.genres.GetAllAsync<GenreViewModel>();
                 return View(input);
             }
 

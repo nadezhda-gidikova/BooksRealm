@@ -16,7 +16,7 @@
         {
             this.author = author;
         }
-        public IActionResult All(int id = 1)
+        public async Task<IActionResult> All(int id = 1)
         {
             if (id <= 0)
             {
@@ -29,8 +29,8 @@
             {
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
-                ItemsCount = this.author.GetCount(),
-                Authors = this.author.GetAllInLIst<AuthorInListViewModel>(id, ItemsPerPage),
+                ItemsCount = await this.author.GetCountAsync(),
+                Authors =await this.author.GetAllInLIstAsync<AuthorInListViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
         }

@@ -1,9 +1,11 @@
 ﻿namespace BooksRealm.Services
 {
+    using BooksRealm.Data.Common;
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
     using BooksRealm.Models.Genres;
     using BooksRealm.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,46 +19,59 @@
         {
             this.genreRepo = genreRepo;
         }
-        public ICollection<GenreViewModel> GetAll()
+        public async Task<ICollection<T>> GetAllAsync<T>()
         {
-            return this.genreRepo.AllAsNoTracking()
-                .Select(x => new GenreViewModel
-                {
-                   GenreId= x.Id,
-                    GenreName=x.Name,
-                })
-                .OrderBy(x => x.GenreName)
-                .ToList();
+            return await this.genreRepo.All()
+                .OrderBy(x => x.Name)
+                .To<T>()                
+                .ToListAsync();
         }
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var author = this.genreRepo
-                 .AllAsNoTracking()
+            var genre = await this.genreRepo
+                 .All()
                  .Where(x => x.Id == id)
                  .To<T>()
-                 .FirstOrDefault();
-
-            return author;
+                 .FirstOrDefaultAsync();
+            if (genre == null)
+            {
+                throw new NullReferenceException(string.Format(ExceptionMessages.GenreNotFound, id));
+            }
+            return genre;
         }
-        public int Add(string name)
+        public async Task<int> AddAsync(string name)
         {
             var genre = new Genre
             {
                 Name = name,
             };
-            this.genreRepo.AddAsync(genre);
-            this.genreRepo.SaveChangesAsync();
+            bool doesGenreExist = await this.genreRepo
+               .All()
+               .AnyAsync(x => x.Name==genre.Name);
+            if (doesGenreExist)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.GenreAlreadyExists, genre.Name));
+            }
+            await this.genreRepo.AddAsync(genre);
+           await this.genreRepo.SaveChangesAsync();
             return genre.Id;
         }
 
-        public int Delete(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            var author = this.genreRepo
-                   .AllAsNoTracking()
+            var genre = await this.genreRepo
+                   .All()
                    .Where(x => x.Id == id)
-                   .FirstOrDefault();
-            this.genreRepo.Delete(author);
-            return author.Id;
+                   .FirstOrDefaultAsync();
+            if (genre == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.GenreNotFound, id));
+            }
+
+            this.genreRepo.Delete(genre);
+            return genre.Id;
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿namespace BooksRealm.Services
 {
+    using BooksRealm.Data.Common;
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
     using BooksRealm.Models.Authors;
     using BooksRealm.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,34 +19,30 @@
         {
             this.authorRepo = authorRepo;
         }
-        public ICollection<AuthorViewModel> GetAll()
+        public async Task<ICollection<T>> GetAllAsync<T>()
         {
-            return this.authorRepo.AllAsNoTracking()
-                .Select(x => new AuthorViewModel
-                {
-                    AuthorId = x.Id,
-                    AuthorName = x.Name,
-                })
-                .OrderBy(x => x.AuthorName)
-                .ToList();
+            return await this.authorRepo.AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .To<T>()
+                .ToListAsync();
         }
-        public IEnumerable<T> GetAllInLIst<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetAllInLIstAsync<T>(int page, int itemsPerPage = 12)
         {
-            var authors = this.authorRepo.AllAsNoTracking()
+            var authors =await this.authorRepo.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
                 .To<T>()
-                .ToList();
+                .ToListAsync();
 
             return authors;
         }
-        public T GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
-            var author = this.authorRepo
-                 .AllAsNoTracking()
+            var author =await this.authorRepo
+                 .All()
                  .Where(x => x.Id == id)
                  .To<T>()
-                 .FirstOrDefault();
+                 .FirstOrDefaultAsync();
 
             return author;
         }
@@ -54,6 +52,14 @@
             {
                 Name = name,
             };
+            bool doesAutorExist = await this.authorRepo
+                .All()
+                .AnyAsync(x => x.Name == author.Name);
+            if (doesAutorExist)
+            {
+                throw new ArgumentException(
+                    string.Format(ExceptionMessages.AuthorAlreadyExists, author.Name));
+            }
             await this.authorRepo.AddAsync(author);
             await this.authorRepo.SaveChangesAsync();
             return author.Id;
@@ -65,13 +71,18 @@
                    .AllAsNoTracking()
                    .Where(x => x.Id == id)
                    .FirstOrDefault();
+            if (author == null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.AuthorNotFound, id));
+            }
             this.authorRepo.Delete(author);
             await this.authorRepo.SaveChangesAsync();
             return author.Id;
         }
-        public int GetCount()
+        public async Task<int> GetCountAsync()
         {
-            return this.authorRepo.AllAsNoTracking().Count();
+            return await this.authorRepo.AllAsNoTracking().CountAsync();
         }
     }
 }

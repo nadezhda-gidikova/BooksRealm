@@ -17,9 +17,9 @@ namespace BooksRealm.Components
         {
             this.bookService = bookService;
         }
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var books = bookService.GetByCategory<BookInListViewModel>("Top 20 Best Books of 2021");
+            var books =await bookService.GetByCategory<BookInListViewModel>("Top 20 Best Books of 2021");
             return View(books);
         }
     }

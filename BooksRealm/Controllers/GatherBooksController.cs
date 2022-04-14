@@ -21,7 +21,7 @@ namespace BooksRealm.Controllers
         }
         public async Task<IActionResult> Add()
         {
-            await this.service.ImportBooksAsync(400,1500);
+            await this.service.ImportBooksAsync(400,4413);
             //this.bookService.AddRating();
             return Redirect("/GatherBooks/Index");
         }

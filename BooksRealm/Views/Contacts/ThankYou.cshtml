@@ -2,10 +2,12 @@
 @{
     this.ViewData["Title"] = "Contacts";
 }
-<h3 class="display-4">Thank you</h3>
-<hr />
-<br />
-<h3>thank you for contacting us!</h3>
-<br />
-<br />
-<h4>Your request will be reviewed as soon is poosible, and we will get back to you on the email provided!</h4>
+<div class="jumbotron text-center">
+    <h1 class="display-3">Thank you for contacting us!</h1>
+    <hr />
+    <p class="lead"><strong>Please expect a reply</strong> to your email address as soon as possible.</p>
+    <hr>
+    <p class="lead">
+        <a class="btn btn-lg btn-primary" asp-controller="Home" asp-action="Index" role="button">Continue to homepage</a>
+    </p>
+</div>

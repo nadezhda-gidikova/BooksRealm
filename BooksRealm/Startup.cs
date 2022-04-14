@@ -84,6 +84,8 @@ namespace BooksRealm
             services.AddTransient<IGenreService, GenreService>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IReviewService, ReviewService>();
+            services.AddTransient<IContactService, ContactService>();
+
             services.AddTransient<IDataGathererService, DataGathererService>();
            
         }
@@ -108,7 +110,7 @@ namespace BooksRealm
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseStatusCodePagesWithRedirects("/Home/HttpError?statusCode={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

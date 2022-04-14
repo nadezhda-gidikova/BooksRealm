@@ -106,7 +106,7 @@ namespace BooksRealm.Tests
            await this.SeedDatabase();
             await this.SeedBooks();
 
-            var result = this.bookService.GetAll<BookInListViewModel>(1,12);
+            var result = await this.bookService.GetAllAsync<BookInListViewModel>(1,12);
 
             var count = result.Count();
             Assert.AreEqual(1, count);

@@ -1,17 +1,14 @@
 ﻿namespace BooksRealm.Services
 {
-    using BooksRealm.Models.Genres;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public interface IGenreService
    {
-       public ICollection<GenreViewModel> GetAll();
-        public T GetById<T>(int id);
-        public int Add(string name);
-        public int Delete(int id);
+        public Task<ICollection<T>> GetAllAsync<T>();
+        public Task<T> GetByIdAsync<T>(int id);
+        public Task<int> AddAsync(string name);
+        public Task<int> DeleteAsync(int id);
 
     }
 }

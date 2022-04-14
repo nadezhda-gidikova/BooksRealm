@@ -1,14 +1,14 @@
 ﻿@using BooksRealm.Components
 @model BooksRealm.Models.Books.BookListViewModel
 @{
-    this.ViewData["Title"] = "All Books, page " + Model.PageNumber;
+    this.ViewData["Title"] = "Look for new favorite book, page " + Model.PageNumber;
 }
 
 @if (this.TempData.ContainsKey("Message"))
 {
     <div class="alert alert-success">@this.TempData["Message"]</div>
 }
-<h1 class="text-info">@this.ViewData["Title"]</h1>
+<h1 class="text-white-50">@this.ViewData["Title"]</h1>
 <hr />
 <hr />
 <partial name="_PagingPartial" model="@Model" />
