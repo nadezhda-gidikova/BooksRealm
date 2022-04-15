@@ -12,10 +12,15 @@ namespace BooksRealm.Services
 public class RatingsService : IRatingsService
     {
         private readonly IDeletableEntityRepository<Vote> votesRepository;
+        private readonly IDeletableEntityRepository<Book> bookRepository;
 
-        public RatingsService(IDeletableEntityRepository<Vote> votesRepository)
+        private readonly IBookService bookService;
+
+        public RatingsService(IDeletableEntityRepository<Vote> votesRepository,
+            IDeletableEntityRepository<Book> bookRepository)
         {
             this.votesRepository = votesRepository;
+            this.bookRepository = bookRepository;
         }
 
         public async Task VoteAsync(int bookId, string userId, int value)
@@ -57,7 +62,7 @@ public class RatingsService : IRatingsService
                 .All()
                 .Where(x => x.BookId == bookId)
                 .AverageAsync(x => x.Value);
-
+            await SetRating(starRatings, bookId);
             return starRatings;
         }
 
@@ -66,8 +71,18 @@ public class RatingsService : IRatingsService
             var starRating = await this.votesRepository
                 .All()
                 .FirstAsync(x => x.BookId == bookId && x.UserId == userId);
-
+          
             return starRating.NextDateRate;
+        }
+        private async Task SetRating(double starRating,int bookId)
+        {
+           var book= await bookRepository.All()
+                .Where(x=>x.Id==bookId)
+                .FirstOrDefaultAsync();
+
+            book.Rating = starRating;
+            await bookRepository.SaveChangesAsync();
+          
         }
     }
 }

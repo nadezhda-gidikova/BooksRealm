@@ -3,9 +3,9 @@ using BooksRealm.Services.Mapping;
 
 namespace BooksRealm.Models.Genres
 {
-    public class GenreViewModel:IMapFrom<BookGenre>
+    public class GenreViewModel:IMapFrom<Genre>
     {
-        public int GenreId { get; set; }
-        public string GenreName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

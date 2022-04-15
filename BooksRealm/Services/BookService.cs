@@ -85,9 +85,9 @@
              int authorId, 
              int genreId)
         {
-            var bookData = this.booksRepo.All()
+            var bookData = await this.booksRepo.All()
                 
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (bookData == null)
             {

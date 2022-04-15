@@ -3,6 +3,7 @@ using BooksRealm.Data.Models;
 using BooksRealm.Messaging;
 using BooksRealm.Models.ContactForm;
 using BooksRealm.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ namespace BooksRealm.Controllers
         {
             return this.View();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Index(ContactFormViewModel contactFormViewModel)
         {

@@ -28,9 +28,9 @@ namespace BooksRealm.Models.Books
 
         public double AverageVote { get; set; }  
 
-        public ICollection<AuthorViewModel> Authors { get; set; } = new HashSet<AuthorViewModel>();
+        public ICollection<AuthorInListViewModel> Authors { get; set; } = new HashSet<AuthorInListViewModel>();
         public ICollection<ReviewViewModel> Reviews { get; set; } = new HashSet<ReviewViewModel>();
-        public ICollection<GenreViewModel> Genres { get; set; } = new HashSet<GenreViewModel>();
+        public ICollection<GenreInListViewModel> Genres { get; set; } = new HashSet<GenreInListViewModel>();
         
         public void CreateMappings(IProfileExpression configuration)
         {

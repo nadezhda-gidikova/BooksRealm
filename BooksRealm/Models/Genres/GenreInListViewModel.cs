@@ -1,4 +1,4 @@
-﻿namespace BooksRealm.Models.Authors
+﻿namespace BooksRealm.Models.Genres
 {
     using BooksRealm.Data.Models;
     using BooksRealm.Services.Mapping;
@@ -7,9 +7,9 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class AuthorInListViewModel:IMapFrom<AuthorBook>
+    public class GenreInListViewModel:IMapFrom<BookGenre>
     {
-        public int AuthorId { get; set; }
-        public string AuthorName { get; set; }
+        public int GenreId { get; set; }
+        public string GenreName { get; set; }
     }
 }

@@ -30,7 +30,7 @@
                 ItemsPerPage = ItemsPerPage,
                 PageNumber = id,
                 ItemsCount = await this.author.GetCountAsync(),
-                Authors =await this.author.GetAllInLIstAsync<AuthorInListViewModel>(id, ItemsPerPage),
+                Authors =await this.author.GetAllInLIstAsync<AuthorViewModel>(id, ItemsPerPage),
             };
             return this.View(viewModel);
         }

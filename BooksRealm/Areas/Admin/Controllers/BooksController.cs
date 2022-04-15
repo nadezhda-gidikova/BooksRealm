@@ -43,11 +43,20 @@
         }
         public async Task<IActionResult> Edit(int id)
         {
-            var book = await this.books.GetByIdAsync<BookFormModel>(id);
-            book.Authors =await this.authors.GetAllAsync<AuthorViewModel>();
-            book.Genres =await  this.genres.GetAllAsync<GenreViewModel>();
+            var book = await this.books.GetByIdAsync<BookViewModel>(id);
 
-            return View(book);
+            var newBook = new BookFormModel
+            {
+                Title = book.Title,
+                Description = book.Description,
+                CoverUrl = book.CoverUrl,
+                DateOfPublish = book.DateOfPublish,
+            };
+            
+            newBook.Authors =await this.authors.GetAllAsync<AuthorViewModel>();
+            newBook.Genres =await this.genres.GetAllAsync<GenreViewModel>();
+
+            return View(newBook);
         }
         [HttpPost]
         public async Task<IActionResult> Edit(int id,BookFormModel input)
@@ -79,7 +88,7 @@
         public async Task<IActionResult> Add() => View(new BookFormModel
         {
             Authors = await this .authors.GetAllAsync<AuthorViewModel>(),
-            Genres=await this.genres.GetAllAsync<GenreViewModel>(),
+            Genres = await this.genres.GetAllAsync<GenreViewModel>(),
 
         });
         [HttpPost]

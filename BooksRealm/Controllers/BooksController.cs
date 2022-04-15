@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Text;
 using BooksRealm.Messaging;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BooksRealm.Controllers
 {
@@ -71,7 +72,7 @@ namespace BooksRealm.Controllers
             var book = this.bookService.GetByIdAsync<BookViewModel>(id);
             return this.View(book);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SendToEmail(int id)
         {

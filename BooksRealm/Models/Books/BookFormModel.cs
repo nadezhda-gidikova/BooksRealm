@@ -15,7 +15,7 @@ namespace BooksRealm.Models.Books
 {
 
 
-    public class BookFormModel : IMapFrom<Book>//,IHaveCustomMappings
+    public class BookFormModel : IMapFrom<Book>,IMapTo<Book>//,IHaveCustomMappings
     {
         [Required]
         [MinLength(TitleMinLength)]

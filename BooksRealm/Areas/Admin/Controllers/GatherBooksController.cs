@@ -2,9 +2,9 @@
 using BooksRealm.Services;
 using System.Threading.Tasks;
 
-namespace BooksRealm.Controllers
+namespace BooksRealm.Areas.Admin.Controllers
 {
-    public class GatherBooksController:Controller
+    public class GatherBooksController:AdminController
     {
         private readonly IDataGathererService service;
         private readonly IBookService bookService;

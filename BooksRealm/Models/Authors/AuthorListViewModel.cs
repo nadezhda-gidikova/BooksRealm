@@ -7,6 +7,6 @@
 
     public class AuthorListViewModel:PagingViewModel
     {
-        public IEnumerable<AuthorInListViewModel> Authors { get; set; } = new List<AuthorInListViewModel>();
+        public IEnumerable<AuthorViewModel> Authors { get; set; } = new List<AuthorViewModel>();
     }
 }

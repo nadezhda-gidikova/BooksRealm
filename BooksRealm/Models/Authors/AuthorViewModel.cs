@@ -3,10 +3,10 @@ using BooksRealm.Services.Mapping;
 
 namespace BooksRealm.Models.Authors
 {
-    public class AuthorViewModel : IMapFrom<AuthorBook>
+    public class AuthorViewModel : IMapFrom<Author>
     {
-        public int AuthorId { get; set; }
-        public string AuthorName { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 
 }

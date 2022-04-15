@@ -18,13 +18,6 @@ namespace BooksRealm.Models.Home
 
             
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration.CreateMap<Book, IndexViewModel>()
-        //        .ForMember(x => x.BooksCount, opt =>
-        //            opt.MapFrom(x =>
-        //                x.books.Count()));
-        //}
     }
 }
 

@@ -1,4 +1,4 @@
-﻿namespace BooksRealm.Tests
+﻿namespace BooksRealmTests
 {
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

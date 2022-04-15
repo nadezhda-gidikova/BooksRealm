@@ -25,7 +25,7 @@ namespace BooksRealm.Models.Books
 
         public string CategoryName { get; set; }    
 
-        public IEnumerable<AuthorViewModel> Authors { get; set; } = new HashSet<AuthorViewModel>();
+        public IEnumerable<AuthorInListViewModel> Authors { get; set; } = new HashSet<AuthorInListViewModel>();
 
         
     }
