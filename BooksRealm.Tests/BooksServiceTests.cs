@@ -1,29 +1,28 @@
 namespace BooksRealm.Tests
 {
     using BooksRealm.Data;
+    using BooksRealm.Data.Common;
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
     using BooksRealm.Data.Repositories;
-    using BooksRealm.Models.Authors;
     using BooksRealm.Models.Books;
-    using BooksRealm.Models.Genres;
     using BooksRealm.Services;
     using BooksRealm.Services.Mapping;
     using Microsoft.Data.Sqlite;
     using Microsoft.EntityFrameworkCore;
-    using Moq;
     using NUnit.Framework;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
 
+    [TestFixture]
     public class BookServiceTests:IDisposable
     {
         private const string TestCoverImageUrl = "https://someurl.com";
         private readonly IBookService bookService;
-        private IDeletableEntityRepository<Book> bookRepository;
+        private EfDeletableEntityRepository<Book> bookRepository;
         private EfDeletableEntityRepository<Genre> genreRepository;
         private EfDeletableEntityRepository<Author> authorRepository;
         private IRepository<AuthorBook> authorBookRepository;
@@ -32,7 +31,7 @@ namespace BooksRealm.Tests
 
         private SqliteConnection connection;
 
-        private Book firstBook;
+        private Book secondBook;
         private Genre firstGenre;
         private Author firstAuthor;
         private BookGenre firstBookGenre;
@@ -49,15 +48,20 @@ namespace BooksRealm.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
+        
+            
         }
-        [Test]
+        [TearDown]
+        public async Task TearDown()
+        {
+         
+        }
+        [Test, RequiresThread]
         public async Task TestAddingBook()
         {
-            this.SeedDatabase();
-
-            BookViewModel bookViewModel;
+           await this.SeedDatabase();
 
                 var model = new BookFormModel
                 {
@@ -74,13 +78,12 @@ namespace BooksRealm.Tests
             var count = await this.bookRepository.All().CountAsync();
 
             Assert.AreEqual(1, count);
+            await this.bookService.DeleteAsync(book);
         }
         [Test]
         public async Task TestAddingBookReturnsViewModel()
         {
-            this.SeedDatabase();
-
-            BookViewModel bookViewModel;
+            await SeedDatabase();
 
             var model = new BookFormModel
             {
@@ -98,12 +101,35 @@ namespace BooksRealm.Tests
             Assert.AreEqual("Spy", book.Title);
             Assert.AreEqual("Test description here", book.Description);
             Assert.AreEqual(TestCoverImageUrl, book.CoverUrl);
-         
+        }
+
+        [Test, Apartment(ApartmentState.STA)]
+        public async Task TestEditingBook()
+        {
+            await SeedDatabase();
+
+            var model = new BookFormModel
+            {
+                Title = "Spy",
+                DateOfPublish = DateTime.UtcNow,
+                CoverUrl = TestCoverImageUrl,
+                Description = "Test description here",
+                GenreId = 1,
+                AuthorId = 1,
+            };
+
+            var bookId = await this.bookService.CreateAsync(model);
+            var book = await this.bookRepository.GetByIdWithDeletedAsync(bookId);
+
+            var edited = await bookService.Edit(bookId, "Renamed", "Editted description", TestCoverImageUrl,"11-10-22", 1, 1);
+
+            Assert.AreEqual("Renamed", book.Title);
+            Assert.AreEqual("Editted description", book.Description);
+            Assert.AreEqual(TestCoverImageUrl, book.CoverUrl);
         }
         [Test]
         public async Task CheckIfGetAllBooksAsyncWorksCorrectly()
         {
-           await this.SeedDatabase();
             await this.SeedBooks();
 
             var result = await this.bookService.GetAllAsync<BookInListViewModel>(1,12);
@@ -113,20 +139,168 @@ namespace BooksRealm.Tests
         }
         [Test]
         public async Task CheckIfDeletingBookWorksCorrectly()
+        {  
+            await this.SeedBooks();
+
+            await this.bookService.DeleteAsync(this.secondBook.Id);
+
+            var count = await this.bookRepository.All().CountAsync();
+
+            Assert.AreEqual(0, count);
+        }
+        [Test]
+        public async Task CheckIfDeletingBookThrowsExceptionWithUnexistingBook()
+        {
+            await this.SeedBooks();
+          
+            var exception =
+                Assert
+                .ThrowsAsync<NullReferenceException>(() => this.bookService.DeleteAsync(3));
+            Assert.AreEqual(string.Format(ExceptionMessages.BookNotFound, 3), exception.Message);
+
+        }
+        [Test]
+        public async Task CheckIfGetByIdReturnsRightBook()
+        {
+            await this.SeedBooks();
+
+            var third = new Book
+            {
+                Title = "Right book",
+                DateOfPublish = DateTime.UtcNow,
+                Description = "Test description second book",
+                CoverUrl = TestCoverImageUrl,
+               
+            };
+
+            await this.bookRepository.AddAsync(third);
+            await this.bookRepository.SaveChangesAsync();
+            var book = await this.bookRepository.GetByIdWithDeletedAsync(2);
+
+            Assert.AreEqual(2, book.Id);
+        }
+
+        [Test]
+        public async Task CheckIfGetByIdReturnsExceptionIfBookNotExist()
+        {
+            await this.SeedBooks();
+
+            var exception = 
+                Assert
+                .ThrowsAsync<NullReferenceException>( () =>  this.bookService.GetByIdAsync<BookViewModel>(2));
+            Assert.AreEqual(string.Format(ExceptionMessages.BookNotFound, 2), exception.Message);
+        }
+        [Test]
+        public async Task CheckIfGetByAuthorIdReturnsRightBook()
         {
             await this.SeedDatabase();
             await this.SeedBooks();
             await this.SeedBookGenres();
             await this.SeedBookAuthors();
 
-            await this.bookService.DeleteAsync(this.firstBook.Id);
+            var author = new Author
+            {
+                Name="Adam Brook"
+            };
+            await authorRepository.AddAsync(author);
+            await authorRepository.SaveChangesAsync();
+            
 
-            var count = await this.bookRepository.All().CountAsync();
+            var third = new Book
+            {
+                Title = "Right book",
+                DateOfPublish = DateTime.UtcNow,
+                Description = "Test description second book",
+                CoverUrl = TestCoverImageUrl,
+            };
+            await bookRepository.AddAsync(third);
+            await this.bookRepository.SaveChangesAsync();
 
-            Assert.AreEqual(0, count);
+            var authorBook = new AuthorBook
+            {
+                AuthorId = author.Id,
+                BookId=third.Id,
+            };
+            await authorBookRepository.AddAsync(authorBook);
+            await authorBookRepository.SaveChangesAsync();
+           
+            var book = await this.bookService.GetByAuthorIdAsync<BookViewModel>(author.Id);
+            var count = book.Count();
+            Assert.AreEqual(1, count);
         }
 
+        [Test]
+        public async Task CheckIfSearchReturnsRightBooks()
+        {
+            await this.SeedDatabase();
+            await this.SeedBooks();
+            await this.SeedBookGenres();
+            await this.SeedBookAuthors();
 
+            var author = new Author
+            {
+                Name = "Adam Brook"
+            };
+            await authorRepository.AddAsync(author);
+            await authorRepository.SaveChangesAsync();
+
+
+            var third = new Book
+            {
+                Title = "Right book",
+                DateOfPublish = DateTime.UtcNow,
+                Description = "Test description second book",
+                CoverUrl = TestCoverImageUrl,
+            };
+            await bookRepository.AddAsync(third);
+            await this.bookRepository.SaveChangesAsync();
+
+            var authorBook = new AuthorBook
+            {
+                AuthorId = author.Id,
+                BookId = third.Id,
+            };
+            await authorBookRepository.AddAsync(authorBook);
+            await authorBookRepository.SaveChangesAsync();
+
+            var bookByAuthorName = await this.bookService.Search<BookViewModel>(author.Name,1,12);
+            var count = bookByAuthorName.Count();
+            Assert.AreEqual(1, count);
+            var bookByTitle = await this.bookService.Search<BookViewModel>(third.Title, 1, 12);
+            var countSecondSearch = bookByTitle.Count();
+            Assert.AreEqual(1, countSecondSearch);
+            var bookByRandomChar = await this.bookService.Search<BookViewModel>("Right", 1, 12);
+            var counthirdSearch = bookByRandomChar.Count();
+            Assert.AreEqual(1, counthirdSearch);
+        }
+
+        [Test]
+        public async Task GetCountShouldReturnCountOfBookss()
+        {
+            await this.SeedBooks();
+
+            var count = await this.bookService.GetCountAsync();
+          
+            Assert.AreEqual(1, count);
+        }
+
+        [Test]
+        public async Task GetRandomShouldReturnSertainCountOfBooks()
+        {
+            await this.SeedBooks();
+            var third = new Book
+            {
+                Title = "Right book",
+                DateOfPublish = DateTime.UtcNow,
+                Description = "Test description second book",
+                CoverUrl = TestCoverImageUrl,
+            };
+            await bookRepository.AddAsync(third);
+            await this.bookRepository.SaveChangesAsync();
+            var book = await this.bookService.GetByTitle<BookViewModel>("Right book");
+
+            Assert.AreEqual(1, book.Count());
+        }
         public void Dispose()
         {
             this.connection.Close();
@@ -165,7 +339,7 @@ namespace BooksRealm.Tests
               
             };
 
-            this.firstBook = new Book
+            this.secondBook = new Book
             {
                 Title = "Secret window",
                 DateOfPublish = DateTime.UtcNow,
@@ -195,37 +369,53 @@ namespace BooksRealm.Tests
 
         private async Task SeedAuthors()
         {
-            await this.authorRepository.AddAsync(this.firstAuthor);
+            if (this.authorRepository.All().Count()==0)
+            {
+                await this.authorRepository.AddAsync(this.firstAuthor);
 
-            await this.authorRepository.SaveChangesAsync();
+                await this.authorRepository.SaveChangesAsync();
+            }
+           
         }
 
         private async Task SeedBooks()
         {
-            await this.bookRepository.AddAsync(this.firstBook);
+            if (this.bookRepository.All().Count() == 0)
+            {
+                await this.bookRepository.AddAsync(this.secondBook);
 
-            await this.bookRepository.SaveChangesAsync();
+                await this.bookRepository.SaveChangesAsync();
+            }
         }
 
         private async Task SeedBookGenres()
         {
-            await this.genreBookRepository.AddAsync(this.firstBookGenre);
+            if (this.genreBookRepository.All().Count() == 0)
+            {
+                await this.genreBookRepository.AddAsync(this.firstBookGenre);
 
-            await this.genreBookRepository.SaveChangesAsync();
+                await this.genreBookRepository.SaveChangesAsync();
+            }
         }
 
         private async Task SeedBookAuthors()
         {
-            await this.authorBookRepository.AddAsync(this.firstAuthorBook);
+            if (this.authorBookRepository.All().Count() == 0)
+            {
+                await this.authorBookRepository.AddAsync(this.firstAuthorBook);
 
-            await this.authorBookRepository.SaveChangesAsync();
+                await this.authorBookRepository.SaveChangesAsync();
+            }
         }
 
         private async Task SeedGenres()
         {
-            await this.genreRepository.AddAsync(this.firstGenre);
+            if (this.genreRepository.All().Count() == 0)
+            {
+                await this.genreRepository.AddAsync(this.firstGenre);
 
-            await this.genreRepository.SaveChangesAsync();
+                await this.genreRepository.SaveChangesAsync();
+            }
         }
 
 

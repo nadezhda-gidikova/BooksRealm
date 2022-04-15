@@ -2,6 +2,7 @@
 {
     public class DataConstants
     {
+    
         public class User
         {
             public const int FullNameMinLength = 5;

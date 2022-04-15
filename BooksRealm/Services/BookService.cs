@@ -91,12 +91,12 @@
 
             if (bookData == null)
             {
-                return false;
+                throw new NullReferenceException(string.Format(ExceptionMessages.BookNotFound, id));
             }
             if (!DateTime.TryParse(dateOfPublish,out DateTime date))
             {
-                throw new NullReferenceException(
-                    string.Format(ExceptionMessages.BookNotFound, id));
+                throw new InvalidOperationException(
+                    string.Format(ExceptionMessages.NotValidDate));
             }
             bookData.Title = title;
             bookData.Description = description;

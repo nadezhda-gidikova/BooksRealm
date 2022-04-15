@@ -17,7 +17,7 @@ namespace BooksRealm.Data.Models
 
         [Required]
         [MaxLength(SubjectMaxLength)]
-        public string Subject { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [MaxLength(ContentMaxLength)]

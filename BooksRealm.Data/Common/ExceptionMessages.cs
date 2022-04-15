@@ -16,6 +16,8 @@
 
         public const string AuthorAlreadyExists = "Author with firstname {0} and lastname {1} already exists";
 
+        public const string NotValidDate = "Date must be between ";
+
         public const string CountryAlreadyExists = "Country with name {0} already exists";
 
         public const string CountryNotFound = "Country with id {0} is not found.";

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
+using BooksRealm.Services.Mapping.Models;
+using System;
 
 namespace BooksRealm.Controllers
 {
@@ -13,17 +16,33 @@ namespace BooksRealm.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBookService bookService;
         private readonly ICountService countService;
+        private readonly IMemoryCache memoryCache;
 
-        public HomeController(ILogger<HomeController> logger,IBookService bookService,ICountService countService)
+        public HomeController(ILogger<HomeController> logger,IBookService bookService,ICountService countService,
+           IMemoryCache memoryCache )
         {
             _logger = logger;
             this.bookService = bookService;
             this.countService = countService;
+            this.memoryCache = memoryCache;
         }
 
         public async Task<IActionResult> Index()
         {
-            var countsDto =this.countService.GetCounts();
+            const string CountServiceCacheKey = "CountServiceCache";
+            var countsDto = this.memoryCache.Get<CountDto>(CountServiceCacheKey);
+
+            if (countsDto == null)
+            {
+                countsDto = this.countService.GetCounts();
+                var cacheOptions = new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
+
+                this.memoryCache.Set(CountServiceCacheKey, countsDto);
+            }
+
+           
+           
             //// var viewModel2 = AutoMapperConfig.MapperInstance.Map<IndexViewModel>(countsDto);
             //// var viewModel = this.mapper.Map<IndexViewModel>(countsDto);
             var viewModel = new IndexViewModel

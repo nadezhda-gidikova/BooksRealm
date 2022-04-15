@@ -70,7 +70,7 @@ namespace BooksRealm
             });
 
             services.AddSingleton(this.configuration);
-
+            services.AddMemoryCache();
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -110,6 +110,8 @@ namespace BooksRealm
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            app.UseStatusCodePages();
+            //app.UseStatusCodePagesWithReExecute();
             app.UseStatusCodePagesWithRedirects("/Home/HttpError?statusCode={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();

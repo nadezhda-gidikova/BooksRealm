@@ -26,7 +26,7 @@ namespace BooksRealm.Services
             {
                 Name=contactFormViewModel.Name,
                 Email = contactFormViewModel.Email,
-                Subject = contactFormViewModel.Subject,
+                Title = contactFormViewModel.Subject,
                 Content = contactFormViewModel.Content,
             };
 

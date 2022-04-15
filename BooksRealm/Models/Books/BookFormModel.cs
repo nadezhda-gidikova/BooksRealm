@@ -33,6 +33,7 @@ namespace BooksRealm.Models.Books
 
         [Required]
         public string CoverUrl { get; set; }
+
         [Display(Name ="Author")]
         [Required]
         public int AuthorId { get; set; }
