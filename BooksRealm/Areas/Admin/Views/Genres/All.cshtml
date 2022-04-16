@@ -1,0 +1,39 @@
+﻿@model BooksRealm.Models.Genres.GenreListViewModel
+
+@{
+    ViewBag.Title = "Books Administration";
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-4 col-xl-6">
+        <h1>All Genres</h1>
+
+        <a asp-area="Admin" asp-controller="Genres" asp-action="Add" class="btn btn-warning ml-3">Add New Genre</a>
+    </div>
+</div>
+
+<hr />
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in Model.Genres)
+        {
+            <tr>
+                <td scope="col">@genre.Id</td>
+                <td scope="col">@genre.Name</td>
+                <td scope="col">
+                    <a asp-area="Admin" asp-controller="Authors" asp-action="Delete" asp-route-id="@genre.Id" class="btn btn-danger float-right ml-3">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+<partial name="_PagingPartial" model="@Model" />

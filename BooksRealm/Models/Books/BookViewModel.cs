@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using BooksRealm.Data.Models;
-using BooksRealm.Services.Mapping;
-using BooksRealm.Models.Authors;
-using BooksRealm.Models.Genres;
-using BooksRealm.Models.Reviews;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace BooksRealm.Models.Books
+﻿namespace BooksRealm.Models.Books
 {
+    using AutoMapper;
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Mapping;
+    using BooksRealm.Models.Authors;
+    using BooksRealm.Models.Genres;
+    using BooksRealm.Models.Reviews;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class BookViewModel:IMapFrom<Book>,IHaveCustomMappings
     {
         public int Id { get; set; }

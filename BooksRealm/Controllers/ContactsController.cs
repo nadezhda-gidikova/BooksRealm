@@ -1,16 +1,11 @@
-﻿using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
-using BooksRealm.Messaging;
-using BooksRealm.Models.ContactForm;
-using BooksRealm.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Controllers
+﻿namespace BooksRealm.Controllers
 {
-   
-    public class ContactsController : Controller
+    using BooksRealm.Models.ContactForm;
+    using BooksRealm.Services;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+
+    public class ContactsController : BaseController
     {
         private readonly IContactService contactsService;
 
@@ -23,7 +18,7 @@ namespace BooksRealm.Controllers
         {
             return this.View();
         }
-        [Authorize]
+        
         [HttpPost]
         public async Task<IActionResult> Index(ContactFormViewModel contactFormViewModel)
         {

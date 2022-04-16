@@ -1,9 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Add Author";
+    ViewBag.Title = "Add Genre";
 }
 
-@using BooksRealm.Models.Authors
-@model AuthorInputModel
+@using BooksRealm.Models.Genres
+@model GenreInputModel
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
@@ -12,7 +12,7 @@
         <form method="post">
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" placeholder="Genre...">
+                <input asp-for="Name" class="form-control" placeholder="Author...">
                 <span asp-validation-for="Name" class="small text-danger"></span>
             </div>
             <input class="btn btn-primary mt-3" type="submit" value="Save" />

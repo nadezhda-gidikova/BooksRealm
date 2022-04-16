@@ -1,11 +1,11 @@
-﻿using BooksRealm.Data.Common.Models;
-
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+
+    using Microsoft.AspNetCore.Identity;
+    using System;
+    using System.Collections.Generic;
+
     public class BooksRealmUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
         public BooksRealmUser()

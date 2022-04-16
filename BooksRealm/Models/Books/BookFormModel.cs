@@ -1,18 +1,13 @@
-﻿using BooksRealm.Models.Authors;
-using BooksRealm.Models.Genres;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BooksRealm.Data;
-using BooksRealm.Services.Mapping;
-using static BooksRealm.Data.DataConstants.Book;
-
-
-using AutoMapper;
-using BooksRealm.Data.Models;
-
-namespace BooksRealm.Models.Books
+﻿namespace BooksRealm.Models.Books
 {
+    using BooksRealm.Models.Authors;
+    using BooksRealm.Models.Genres;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using BooksRealm.Services.Mapping;
+    using static BooksRealm.Data.DataConstants.Book;
+    using BooksRealm.Data.Models;
 
 
     public class BookFormModel : IMapFrom<Book>,IMapTo<Book>//,IHaveCustomMappings

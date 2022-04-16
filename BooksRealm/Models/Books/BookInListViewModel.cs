@@ -1,12 +1,11 @@
-﻿using AutoMapper;
-using BooksRealm.Data.Models;
-using BooksRealm.Models.Authors;
-using BooksRealm.Services.Mapping;
-using System;
-using System.Collections.Generic;
-
-namespace BooksRealm.Models.Books
+﻿namespace BooksRealm.Models.Books
 {
+    using BooksRealm.Data.Models;
+    using BooksRealm.Models.Authors;
+    using BooksRealm.Services.Mapping;
+    using System;
+    using System.Collections.Generic;
+
     public class BookInListViewModel : IMapFrom<Book>//, IHaveCustomMappings
     {
         public int Id { get; set; }

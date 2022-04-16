@@ -1,9 +1,9 @@
-﻿using BooksRealm.Data.Common.Models;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Vote: BaseDeletableModel<int>
     {
         [ForeignKey(nameof(Book))]

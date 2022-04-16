@@ -1,15 +1,15 @@
-﻿using BooksRealm.Data.Common.Models;
-using BooksRealm.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Data
+﻿namespace BooksRealm.Data
 {
+    using BooksRealm.Data.Common.Models;
+    using BooksRealm.Data.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class BooksRealmDbContext : IdentityDbContext<BooksRealmUser, BooksRealmRole, string>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =

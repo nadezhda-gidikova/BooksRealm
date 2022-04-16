@@ -1,8 +1,8 @@
-﻿using BooksRealm.Data.Models;
-using BooksRealm.Services.Mapping;
-
-namespace BooksRealm.Models.Authors
+﻿namespace BooksRealm.Models.Authors
 {
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Mapping;
+
     public class AuthorViewModel : IMapFrom<Author>
     {
         public int Id { get; set; }

@@ -1,10 +1,10 @@
-﻿using BooksRealm.Data.Common.Models;
-using static BooksRealm.Data.DataConstants.ContactFormEntry;
-
-using System.ComponentModel.DataAnnotations;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+    using static BooksRealm.Data.DataConstants.ContactFormEntry;
+
+    using System.ComponentModel.DataAnnotations;
+
     public class ContactFormEntry:BaseModel<int>
     {
         [Required]

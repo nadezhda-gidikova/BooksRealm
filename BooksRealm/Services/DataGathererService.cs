@@ -1,20 +1,20 @@
-﻿using AngleSharp;
-using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
-using Services.Models;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services
+﻿namespace BooksRealm.Services
 {
+    using AngleSharp;
+    using BooksRealm.Data.Common.Repositories;
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Models;
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class DataGathererService:IDataGathererService
     {
         private const string BaseUrl = "https://www.bookbrowse.com/reviews/index.cfm/book_number/{0}/#media_reviews";

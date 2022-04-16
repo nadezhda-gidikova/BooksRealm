@@ -1,9 +1,9 @@
-﻿using BooksRealm.Data.Common.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+    using Microsoft.AspNetCore.Identity;
+    using System;
+
     public class BooksRealmRole : IdentityRole, IAuditInfo, IDeletableEntity
     {
         public BooksRealmRole()

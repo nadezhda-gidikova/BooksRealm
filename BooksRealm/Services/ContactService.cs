@@ -1,13 +1,12 @@
-﻿using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
-using BooksRealm.Messaging;
-using BooksRealm.Models.ContactForm;
-using System.Threading.Tasks;
-
-
-namespace BooksRealm.Services
+﻿namespace BooksRealm.Services
 {
-   
+    using BooksRealm.Data.Common.Repositories;
+    using BooksRealm.Data.Models;
+    using BooksRealm.Messaging;
+    using BooksRealm.Models.ContactForm;
+    using System.Threading.Tasks;
+
+
     public class ContactService:IContactService
     {
         private readonly IRepository<ContactFormEntry> contactsRepository;

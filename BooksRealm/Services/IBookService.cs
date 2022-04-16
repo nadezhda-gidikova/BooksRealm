@@ -1,9 +1,9 @@
-﻿using BooksRealm.Models.Books;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services
+﻿namespace BooksRealm.Services
 {
+    using BooksRealm.Models.Books;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IBookService
     {
         public Task<int> CreateAsync(BookFormModel input);

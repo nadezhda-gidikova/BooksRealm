@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class AuthorBook
     {
         public int Id { get; set; }

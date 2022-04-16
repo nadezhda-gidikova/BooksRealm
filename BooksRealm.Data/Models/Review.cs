@@ -1,11 +1,11 @@
-﻿using BooksRealm.Data.Common.Models;
-using static BooksRealm.Data.DataConstants.Review;
-
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+    using static BooksRealm.Data.DataConstants.Review;
+
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Review: BaseDeletableModel<int>
     {
         [Required]

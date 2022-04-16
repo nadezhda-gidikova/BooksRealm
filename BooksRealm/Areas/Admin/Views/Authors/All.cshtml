@@ -4,10 +4,15 @@
     ViewBag.Title = "Books Administration";
 }
 
-<h1>All Authors</h1>
+<div class="row">
+    <div class="col-sm-12 offset-lg-3 col-lg-8 offset-xl-4 col-xl-6">
+        <h1>All Authors</h1>
 
-<a asp-area="Admin" asp-controller="Authors" asp-action="Add" class="btn btn-warning float-right ml-3">Add New Author</a>
+        <a asp-area="Admin" asp-controller="Authors" asp-action="Add" class="btn btn-warning">Add New Author</a>
+    </div>
+</div>
 
+<hr />
 
 <table class="table table-striped">
     <thead class="thead-dark">

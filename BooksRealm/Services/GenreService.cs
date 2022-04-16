@@ -3,7 +3,6 @@
     using BooksRealm.Data.Common;
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
-    using BooksRealm.Models.Genres;
     using BooksRealm.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
     using System;
@@ -25,6 +24,16 @@
                 .OrderBy(x => x.Name)
                 .To<T>()                
                 .ToListAsync();
+        }
+        public async Task<IEnumerable<T>> GetAllInLIstAsync<T>(int page, int itemsPerPage = 12)
+        {
+            var authors = await this.genreRepo.All()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage).Take(itemsPerPage)
+                .To<T>()
+                .ToListAsync();
+
+            return authors;
         }
         public async Task<T> GetByIdAsync<T>(int id)
         {
@@ -73,6 +82,10 @@
             this.genreRepo.Delete(genre);
             await this.genreRepo.SaveChangesAsync();
             return genre.Id;
+        }
+        public async Task<int> GetCountAsync()
+        {
+            return await this.genreRepo.AllAsNoTracking().CountAsync();
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using BooksRealm.Data.Common.Models;
-using static BooksRealm.Data.DataConstants.User;
-
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace BooksRealm.Data.Models
+﻿namespace BooksRealm.Data.Models
 {
+    using BooksRealm.Data.Common.Models;
+    using static BooksRealm.Data.DataConstants.User;
+
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class Author:BaseDeletableModel<int>
     {
         [Required]

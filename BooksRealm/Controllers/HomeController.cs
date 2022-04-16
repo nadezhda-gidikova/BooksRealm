@@ -1,16 +1,16 @@
-﻿using BooksRealm.Models;
-using BooksRealm.Services;
-using BooksRealm.Models.Home;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
-using BooksRealm.Services.Mapping.Models;
-using System;
-
-namespace BooksRealm.Controllers
+﻿namespace BooksRealm.Controllers
 {
+    using BooksRealm.Models;
+    using BooksRealm.Services;
+    using BooksRealm.Models.Home;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+    using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Caching.Memory;
+    using BooksRealm.Services.Mapping.Models;
+    using System;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

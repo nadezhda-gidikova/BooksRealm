@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services.Mapping
+﻿namespace BooksRealm.Services.Mapping
 {
+    using AutoMapper;
+    using System;
+    using System.Linq;
+    using System.Reflection;
+
     public class MappingProfile : Profile
     {
         public MappingProfile()

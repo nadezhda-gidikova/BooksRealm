@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BooksRealm.Services;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Areas.Admin.Controllers
+﻿namespace BooksRealm.Areas.Admin.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using BooksRealm.Services;
+    using System.Threading.Tasks;
+
     public class GatherBooksController:AdminController
     {
         private readonly IDataGathererService service;

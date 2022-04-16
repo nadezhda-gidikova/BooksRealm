@@ -1,15 +1,10 @@
-﻿using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
-using BooksRealm.Services.Mapping;
-using BooksRealm.Services.Mapping.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services
+﻿namespace BooksRealm.Services
 {
+    using BooksRealm.Data.Common.Repositories;
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Mapping.Models;
+    using System.Linq;
+
     public class CountService : ICountService
     {
         private readonly IDeletableEntityRepository<Book> booksRepository;

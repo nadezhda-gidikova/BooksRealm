@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services.Mapping.Models
+﻿namespace BooksRealm.Services.Mapping.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
     public class PersonDto:IMapFrom<Person>
     {
         public int Id { get; set; }

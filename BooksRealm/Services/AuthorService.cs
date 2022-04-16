@@ -3,7 +3,6 @@
     using BooksRealm.Data.Common;
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
-    using BooksRealm.Models.Authors;
     using BooksRealm.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
     using System;

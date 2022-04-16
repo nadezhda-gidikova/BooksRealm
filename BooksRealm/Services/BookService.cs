@@ -3,14 +3,12 @@
     using BooksRealm.Data.Common.Repositories;
     using BooksRealm.Data.Models;
     using BooksRealm.Services.Mapping;
-    using BooksRealm.Data;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System;
     using Microsoft.EntityFrameworkCore;
     using BooksRealm.Models.Books;
-    using System.Globalization;
     using BooksRealm.Data.Common;
 
     public class BookService : IBookService
@@ -238,7 +236,7 @@
 
         public async Task<IEnumerable<T>> GetByCategory<T>(string categoryName)
         {
-            var query =await this.booksRepo.All()
+            var query =await this.booksRepo.All() 
                 .Where(x => x.Genres.Any(y => y.Genre.Name == categoryName))
                 .OrderBy(x => x.DateOfPublish)
                 .Distinct()

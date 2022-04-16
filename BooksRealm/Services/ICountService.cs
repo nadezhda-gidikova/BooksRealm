@@ -1,13 +1,8 @@
-﻿
-using BooksRealm.Services.Mapping.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BooksRealm.Services
+﻿namespace BooksRealm.Services
 {
+
+    using BooksRealm.Services.Mapping.Models;
+
     public interface ICountService
     {
         CountDto GetCounts();

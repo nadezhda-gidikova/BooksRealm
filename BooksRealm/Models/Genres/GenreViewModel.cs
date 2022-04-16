@@ -1,8 +1,8 @@
-﻿using BooksRealm.Data.Models;
-using BooksRealm.Services.Mapping;
-
-namespace BooksRealm.Models.Genres
+﻿namespace BooksRealm.Models.Genres
 {
+    using BooksRealm.Data.Models;
+    using BooksRealm.Services.Mapping;
+
     public class GenreViewModel:IMapFrom<Genre>
     {
         public int Id { get; set; }

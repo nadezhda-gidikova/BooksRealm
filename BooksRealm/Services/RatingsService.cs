@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using BooksRealm.Data.Common;
-using BooksRealm.Data.Common.Repositories;
-using BooksRealm.Data.Models;
+﻿namespace BooksRealm.Services
+{
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using BooksRealm.Data.Common;
+    using BooksRealm.Data.Common.Repositories;
+    using BooksRealm.Data.Models;
 
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
-namespace BooksRealm.Services
-{ 
-public class RatingsService : IRatingsService
+    public class RatingsService : IRatingsService
     {
         private readonly IDeletableEntityRepository<Vote> votesRepository;
         private readonly IDeletableEntityRepository<Book> bookRepository;

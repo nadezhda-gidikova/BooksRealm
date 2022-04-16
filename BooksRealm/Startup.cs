@@ -111,8 +111,8 @@ namespace BooksRealm
                 app.UseHsts();
             }
             app.UseStatusCodePages();
-            //app.UseStatusCodePagesWithReExecute();
-            app.UseStatusCodePagesWithRedirects("/Home/HttpError?statusCode={0}");
+            app.UseStatusCodePagesWithReExecute("/Home/HttpError?statusCode={0}");
+            //app.UseStatusCodePagesWithRedirects("/Home/HttpError?statusCode={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
