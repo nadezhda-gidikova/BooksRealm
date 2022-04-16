@@ -360,7 +360,7 @@
 
         private async Task SeedAuthors()
         {
-            if (this.authorRepository.All().Any())
+            if (this.bookRepository.All().Count()==0)
             {
                 await this.authorRepository.AddAsync(this.firstAuthor);
 
@@ -371,7 +371,7 @@
 
         private async Task SeedBooks()
         {
-            if (this.bookRepository.All().Any())
+            if (this.bookRepository.All().Count()==0)
             {
                 await this.bookRepository.AddAsync(this.secondBook);
 
@@ -381,7 +381,7 @@
 
         private async Task SeedBookGenres()
         {
-            if (this.genreBookRepository.All().Any())
+            if (this.genreBookRepository.All().Count() == 0)
             {
                 await this.genreBookRepository.AddAsync(this.firstBookGenre);
 
@@ -391,7 +391,7 @@
 
         private async Task SeedBookAuthors()
         {
-            if (this.authorBookRepository.All().Any())
+            if (this.authorBookRepository.All().Count() == 0)
             {
                 await this.authorBookRepository.AddAsync(this.firstAuthorBook);
 
@@ -401,7 +401,7 @@
 
         private async Task SeedGenres()
         {
-            if (this.genreRepository.All().Any())
+            if (this.genreRepository.All().Count() == 0)
             {
                 await this.genreRepository.AddAsync(this.firstGenre);
 
