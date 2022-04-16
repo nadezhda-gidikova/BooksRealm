@@ -14,7 +14,7 @@
 
         public const string BookGenreNotFound = "Book's genre with book id {0} and genre id {1} is not found.";
 
-        public const string AuthorAlreadyExists = "Author with firstname {0} and lastname {1} already exists";
+        public const string AuthorAlreadyExists = "Author with name {0} already exists";
 
         public const string NotValidDate = "Date must be between ";
 

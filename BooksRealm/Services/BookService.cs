@@ -210,13 +210,13 @@
             }
             return query;
         }
-        public async Task<IEnumerable<T>> GetByTitle<T>(string titleName)
+        public async Task<T> GetByTitle<T>(string titleName)
         {
             var query =await this.booksRepo.All()
                 .Where(x => (!String.IsNullOrEmpty(x.Title) && x.Title.Contains(titleName))
                 || x.Title == titleName)
                 .To<T>()
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
             return query;
 

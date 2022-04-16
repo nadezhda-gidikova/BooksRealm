@@ -14,8 +14,6 @@ public class RatingsService : IRatingsService
         private readonly IDeletableEntityRepository<Vote> votesRepository;
         private readonly IDeletableEntityRepository<Book> bookRepository;
 
-        private readonly IBookService bookService;
-
         public RatingsService(IDeletableEntityRepository<Vote> votesRepository,
             IDeletableEntityRepository<Book> bookRepository)
         {

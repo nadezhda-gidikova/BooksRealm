@@ -12,7 +12,7 @@ namespace BooksRealm.Services
         public Task<T> GetByIdAsync<T>(int id);
         public Task<IEnumerable<T>> GetByAuthorIdAsync<T>(int authorId);
         public Task<IEnumerable<T>> GetByCategory<T>(string categoryName);
-        public Task<IEnumerable<T>> GetByTitle<T>(string titleName);
+        public Task<T> GetByTitle<T>(string titleName);
         public Task<IEnumerable<T>> Search<T>(string searchTerm, int page, int itemsPerPage = 12);
         public Task<int> GetCountAsync();
         public Task<IEnumerable<T>> GetRandomAsync<T>(int count);

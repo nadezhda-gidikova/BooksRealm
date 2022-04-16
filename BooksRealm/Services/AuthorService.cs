@@ -43,7 +43,11 @@
                  .Where(x => x.Id == id)
                  .To<T>()
                  .FirstOrDefaultAsync();
-
+            if (author==null)
+            {
+                throw new NullReferenceException(
+                    string.Format(ExceptionMessages.AuthorNotFound, id));
+            }
             return author;
         }
         public async Task<int> AddAsync(string name)

@@ -39,13 +39,13 @@
             return this.View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(string name)
+        public async Task<IActionResult> Add(AuthorInputModel author)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var authorId = await this.author.AddAsync(name);
+            var authorId = await this.author.AddAsync(author.Name);
             return RedirectToAction(nameof(All));
 
         }

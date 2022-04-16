@@ -112,7 +112,7 @@
             var bookId = await this.bookService.CreateAsync(model);
             var book = await this.bookRepository.GetByIdWithDeletedAsync(bookId);
 
-            var edited = await bookService.Edit(bookId, "Renamed", "Editted description", TestCoverImageUrl, "11-10-22", 1, 1);
+             await bookService.Edit(bookId, "Renamed", "Editted description", TestCoverImageUrl, "11-10-22", 1, 1);
 
             Assert.Equal("Renamed", book.Title);
             Assert.Equal("Editted description", book.Description);
@@ -290,7 +290,7 @@
             await this.bookRepository.SaveChangesAsync();
             var book = await this.bookService.GetByTitle<BookViewModel>("Right book");
 
-            Assert.Equal(1, book.Count());
+            Assert.Equal(third.Title, book.Title);
         }
         public void Dispose()
         {
@@ -360,7 +360,7 @@
 
         private async Task SeedAuthors()
         {
-            if (this.authorRepository.All().Count() == 0)
+            if (this.authorRepository.All().Any())
             {
                 await this.authorRepository.AddAsync(this.firstAuthor);
 
@@ -371,7 +371,7 @@
 
         private async Task SeedBooks()
         {
-            if (this.bookRepository.All().Count() == 0)
+            if (this.bookRepository.All().Any())
             {
                 await this.bookRepository.AddAsync(this.secondBook);
 
@@ -381,7 +381,7 @@
 
         private async Task SeedBookGenres()
         {
-            if (this.genreBookRepository.All().Count() == 0)
+            if (this.genreBookRepository.All().Any())
             {
                 await this.genreBookRepository.AddAsync(this.firstBookGenre);
 
@@ -391,7 +391,7 @@
 
         private async Task SeedBookAuthors()
         {
-            if (this.authorBookRepository.All().Count() == 0)
+            if (this.authorBookRepository.All().Any())
             {
                 await this.authorBookRepository.AddAsync(this.firstAuthorBook);
 
@@ -401,7 +401,7 @@
 
         private async Task SeedGenres()
         {
-            if (this.genreRepository.All().Count() == 0)
+            if (this.genreRepository.All().Any())
             {
                 await this.genreRepository.AddAsync(this.firstGenre);
 
