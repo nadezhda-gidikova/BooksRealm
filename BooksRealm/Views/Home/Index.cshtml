@@ -46,13 +46,13 @@
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg">
-                                        <img src="@book.CoverUrl" width="300" img-responsive class="img-fluid rounded-start" alt="@book.Title">
+                                        <img src="@book.CoverUrl" width="300"  class="img-responsive rounded-start" alt="@book.Title">
                                         <div class="ep">Rating: @book.Rating</div>
                                     </div>
                                     <div class="product__item__text">
                                         <ul>
-                                            <li>"@book.DateOfPublish"</li>
-                                            <li>""</li>
+                                            <li><i class="fa fa-calendar"></i></li>
+                                            <li>@book.DateOfPublish.ToString("Y")</li>
                                         </ul>
                                         <h5><a>@book.Title</a></h5>
                                         <h5><a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id" class="btn site-btn">Details</a></h5>

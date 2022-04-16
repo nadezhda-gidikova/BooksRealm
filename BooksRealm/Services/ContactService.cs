@@ -25,7 +25,7 @@
             {
                 Name=contactFormViewModel.Name,
                 Email = contactFormViewModel.Email,
-                Title = contactFormViewModel.Subject,
+                Subject = contactFormViewModel.Subject,
                 Content = contactFormViewModel.Content,
             };
 

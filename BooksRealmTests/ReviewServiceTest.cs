@@ -19,9 +19,7 @@ namespace BooksRealmTests
     public class ReviewServiceTests : IDisposable
     {
         private const string TestCoverPath = "https://somecoverurl.com";
-        private const string TestTrailerPath = "https://sometrailerurl.com";
-        private const string TestWallpaperPath = "https://somewallpaperurl.com";
-
+     
         private readonly IReviewService reviewService;
         private EfDeletableEntityRepository<Review> reviewRepository;
         private EfDeletableEntityRepository<Book> bookRepository;

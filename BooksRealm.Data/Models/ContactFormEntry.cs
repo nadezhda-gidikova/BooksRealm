@@ -17,7 +17,7 @@
 
         [Required]
         [MaxLength(SubjectMaxLength)]
-        public string Title { get; set; }
+        public string Subject { get; set; }
 
         [Required]
         [MaxLength(ContentMaxLength)]

@@ -29,6 +29,7 @@
 
         public async Task<IActionResult> Index()
         {
+            
             const string CountServiceCacheKey = "CountServiceCache";
             var countsDto = this.memoryCache.Get<CountDto>(CountServiceCacheKey);
 
