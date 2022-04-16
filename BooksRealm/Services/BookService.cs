@@ -240,7 +240,7 @@
         {
             var query =await this.booksRepo.All()
                 .Where(x => x.Genres.Any(y => y.Genre.Name == categoryName))
-                .OrderBy(x => Guid.NewGuid())
+                .OrderBy(x => x.DateOfPublish)
                 .Distinct()
                 .To<T>()
                 .ToListAsync();

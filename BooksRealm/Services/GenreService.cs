@@ -71,6 +71,7 @@
             }
 
             this.genreRepo.Delete(genre);
+            await this.genreRepo.SaveChangesAsync();
             return genre.Id;
         }
     }

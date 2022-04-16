@@ -43,7 +43,7 @@
 
         public const string PrivacyViewModelNotFound = "Privacy view model is not found.";
 
-        public const string BookCommentAlreadyExists = "Book comment with book id {0} and content {1} already exists";
+        public const string ReviewAlreadyExists = "Review with book id {0} and content {1} already exists";
 
         public const string NewsCommentAlreadyExists = "Book comment with news id {0} and content {1} already exists";
     }

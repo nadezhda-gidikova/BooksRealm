@@ -130,6 +130,28 @@
         }
 
         [Fact]
+        public async Task CheckIfGetAllInListAuthorsAsyncWorksCorrectly()
+        {
+            this.SeedDatabase();
+
+            var result = await this.authorsService.GetAllInLIstAsync<AuthorViewModel>(1,12);
+
+            var count = result.Count();
+            Assert.Equal(1, count);
+        }
+
+        [Fact]
+        public async Task CheckIfCounAuthorsAsyncWorksCorrectly()
+        {
+            this.SeedDatabase();
+
+            var result = await this.authorsService.GetCountAsync();
+
+           
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
         public async Task CheckIfGetAuthorViewModelByIdAsyncWorksCorrectly()
         {
             this.SeedDatabase();
