@@ -96,6 +96,7 @@
 
     <div class="container">
         <main role="main" class="pb-3">
+            <partial name="_Messages" />
             @RenderBody()
         </main>
     </div>
@@ -115,10 +116,11 @@
                 <div class="col-lg-6">
                     <div class="footer__nav">
                         <ul>
-                            <li class="active"><a href="./index.html">Homepage</a></li>
-                            <li><a href="./categories.html">Categories</a></li>
-                            <li><a href="./blog.html">Our Blog</a></li>
-                            <li><a href="#">Contacts</a></li>
+                            <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Homepage</a></li>
+                            <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Thrillers">Thrillers</a></li>
+                            <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Romance/Love Stories">Romance</a></li>
+                            <li><a asp-controller="Books" asp-action="ByCategory" asp-route-categoryName="Science, Health and the Environment">Science</a></li>
+                            <li><a asp-area="" asp-controller="Contacts" asp-action="Index">Contacts</a></li>
                         </ul>
                     </div>
                 </div>
@@ -150,7 +152,7 @@
     <script src="~/js/rating.js"></script>
     <script src="~/plugins/toastr/toastr.min.js"></script>
     <script src="~/lib/moment/min/moment-with-locales.min.js"></script>
-    <partial name="_Messages" />
+   
 
     @await RenderSectionAsync("Scripts", required: false)
 

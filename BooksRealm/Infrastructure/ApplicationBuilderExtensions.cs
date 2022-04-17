@@ -62,6 +62,10 @@
                     await userManager.CreateAsync(user, adminPassword);
 
                     await userManager.AddToRoleAsync(user, role.Name);
+
+                    var roleUser = new BooksRealmRole { Name = AdminConstants.UserRoleName };
+
+                    await roleManager.CreateAsync(roleUser);
                 })
                 .GetAwaiter()
                 .GetResult();

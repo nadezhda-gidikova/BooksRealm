@@ -31,8 +31,11 @@
         public DbSet<Review> Reviews { get; set; }
 
         public DbSet<Vote> Votes { get; set; }
+
         public DbSet<ContactFormEntry> ContactForm { get; set; }
+
         public DbSet<BookGenre> BookGenres { get; set; }
+
         public DbSet<AuthorBook> AuthorBooks { get; set; }
 
 

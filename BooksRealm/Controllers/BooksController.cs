@@ -10,24 +10,28 @@
     using BooksRealm.Messaging;
     using System.Linq;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
 
     public class BooksController:Controller
     {
         private readonly IBookService bookService;
         private readonly IDeletableEntityRepository<Book> bookRepository;
+        private readonly UserManager<BooksRealmUser> userManager;
         private readonly IEmailSender emailSender;
 
-        public BooksController(IBookService bookService, IDeletableEntityRepository<Book>bookRepository,IEmailSender emailSender )
+        public BooksController(IBookService bookService, IDeletableEntityRepository<Book>bookRepository,
+             UserManager<BooksRealmUser> userManager, IEmailSender emailSender )
         {
             this.bookService = bookService;
             this.bookRepository = bookRepository;
+            this.userManager = userManager;
             this.emailSender = emailSender;
         }
        
         public async Task<IActionResult> ByCategory(string categoryName)
         {
             var books =await this.bookService.GetByCategory<BookInListViewModel>(categoryName);
-            //ViewBag.Category = categoryName;
+            ViewBag.Category = categoryName;
             return this.View(books);
         }
         [HttpPost]
@@ -61,7 +65,7 @@
             };
             return this.View(viewModel);
         }
-       
+       [Authorize]
         public async Task<IActionResult> ById(int id)
         {
             var book =await this.bookService.GetByIdAsync<BookViewModel>(id);
@@ -77,12 +81,13 @@
         [HttpPost]
         public async Task<IActionResult> SendToEmail(int id)
         {
+            
             var book = await this.bookService.GetByIdAsync<BookInListViewModel>(id);
             var html = new StringBuilder();
             html.AppendLine($"<h1>{book.Title}</h1>");
             html.AppendLine($"<h3>{book.Authors.First()}</h3>");
             html.AppendLine($"<img src=\"{book.CoverUrl}\" />");
-            await this.emailSender.SendEmailAsync("info@booksrealm.com", "Booksrealm", "nadezhda_gidikova@yahoo.com", book.Title, html.ToString());
+            await this.emailSender.SendEmailAsync(@$"info@booksrealm.com", "Booksrealm", "nadezhda_gidikova@yahoo.com", book.Title, html.ToString());
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 

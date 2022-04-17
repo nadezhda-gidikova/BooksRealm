@@ -16,6 +16,10 @@
                     <div class="anime__details__text row">
                         <div class="anime__details__title col-md-8">
                             <h3>@Model.Title</h3>
+                            <form method="post" asp-action="SendToEmail" asp-route-id="@Model.Id">
+                                <button class="btn btn-warning">Send to my email</button>
+                            </form>
+                           
                             <span>
                                 By:
                                 @foreach (var auth in @Model.Authors)
@@ -58,13 +62,16 @@
                         </div>
                         <div class="clearfix"></div>
                         
-                        <p>@Model.Description</p>
+                        <div>
+                            <p>@Model.Description</p>
+                        </div>
+                        <hr />
                         <div class="anime__details__widget">
                             <div class="row">
                                 <div class="col-lg-8 col-md-8 text-white-50">
 
                                     
-                                   Date of publish:<span class="text-white">@Model.DateOfPublish.ToString("Y")></span>
+                                   Date of publish:<span class="text-white">@Model.DateOfPublish.ToString("Y")</span>
 
                                 </div>
                                 <div class="col-lg-8 col-md-6 text-white-50">

@@ -61,6 +61,16 @@
         [HttpPost]
         public async Task<IActionResult> Edit(int id,BookFormModel input)
         {
+            var author = await this.authors.GetByIdAsync<AuthorViewModel>(input.AuthorId);
+            if (author == null)
+            {
+                this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
+            }
+            var genre = await this.genres.GetByIdAsync<GenreViewModel>(input.GenreId);
+            if (genre == null)
+            {
+                this.ModelState.AddModelError(nameof(input.GenreId), "Genre does not exist.");
+            }
             if (!ModelState.IsValid)
             {
                 input.Authors =await this.authors.GetAllAsync<AuthorViewModel>();
@@ -94,11 +104,16 @@
         [HttpPost]
         public async Task<IActionResult> Add(BookFormModel input)
         {
-
-            //if (!this.authors.Any(input.AuthorId))
-            //{
-            //    this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
-            //}
+            var author = await this.authors.GetByIdAsync<AuthorViewModel>(input.AuthorId);
+            if (author==null)
+            {
+                this.ModelState.AddModelError(nameof(input.AuthorId), "Author does not exist.");
+            }
+            var genre = await this.genres.GetByIdAsync<GenreViewModel>(input.GenreId);
+            if (genre == null)
+            {
+                this.ModelState.AddModelError(nameof(input.GenreId), "Genre does not exist.");
+            }
 
             if (!ModelState.IsValid)
             {
