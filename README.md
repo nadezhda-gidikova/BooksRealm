@@ -13,7 +13,7 @@ The web application provides modern graphical interface for work. The applicatio
 
 ## Unit tests Code coverage
 
-![Code coverage](https://github.com/stanislavstoyanov99/CinemaWorld/blob/master/tests-code-coverage.png)
+
 
 ## :hammer: Used technologies
 * ASP.NET [CORE 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1 "CORE 3.1") MVC
