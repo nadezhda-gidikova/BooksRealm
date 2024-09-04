@@ -5,7 +5,7 @@
 
 ## :point_right: Project Introduction :point_left:
 
-**BooksRealm** is my defense project for **ASP.NET Core** course at [SoftUni](https://softuni.bg/trainings/2796/asp-net-core-february-2020). It is a ready-to-use ASP.NET Core application.
+**BooksRealm** is my defence project for **ASP.NET Core** course at [SoftUni](https://softuni.bg/trainings/2796/asp-net-core-february-2020). It is a ready-to-use ASP.NET Core Application.
 
 ## :pencil: Project Description EN
 The web application provides modern graphical interface for work. The application combines a lot of functionality which can be useful for all types of users. In the navbar like many web applications there is easy to use navigational panel with the following menus: “Home”, “Categories”, “Categories” – with a dropping menu. Above this navbar there is a search bar which can find the requested information from the user using searching in the whole system. In the footer of each page there is a reference with links to other pages of the system – “Home”, some categories, “Contact us”.
